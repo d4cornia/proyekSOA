@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <div class="succ" style="color: green">
+        <b><%= message %></b>
+    </div>
+    <div class="err" style="color: red">
+        <b><%= errorMessage %></b>
+    </div>
+
+    <button><a href="/api/pokemons/keLogin">Ke Login</a></button>
+    <br>
+    <h1>Register</h1><br>
+    <form action='/api/pokemons/register' method="post">
+        No. Telp : <input type="text" name="notelp" id=""><br>
+        Nama : <input type="text" name="nama" id=""><br>
+        Password : <input type="password" name="pass" id=""><br>
+        Confirm Password : <input type="password" name="cpass" id=""><br>
+        <input type="submit" name="daftar" value="Daftar"/>
+    </form>
+</body>
+</html>
