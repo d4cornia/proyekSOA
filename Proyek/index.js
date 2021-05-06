@@ -44,27 +44,6 @@ morgan.token('tgl',(req,res)=>{
 
 app.use(morgan(`:meth :method; URL: :url:stat :msg :tgl ResponseTime: :response-time ms`,{stream:accessLogStream}));
 
-const genKodeKelas = (length) => {
-    const alphabets= 'abcdefghijklmnopqrstuvwxyz'.split('');
-
-    let key= '';
-
-    for (let i= 0; i < length; i++) {
-        let hash= Math.floor(Math.random()*2)+1;
-        let model= Math.floor(Math.random()*2)+1;
-        let randAlpha= Math.floor(Math.random()*alphabets.length);
-
-        if (hash === 1) {
-            key+= Math.floor(Math.random()*10);
-        } else {
-            if (model === 1) key+= alphabets[randAlpha].toUpperCase();
-            else key+= alphabets[randAlpha];
-        }
-    }
-
-    return key;
-};
-
 const storage = multer.diskStorage({
     destination:function(req, file, callback){
         callback(null,'./public/uploads');
@@ -118,6 +97,26 @@ const {
 } = require("./middleware");
 //
 
+const genKodeKelas = (length) => {
+    const alphabets= 'abcdefghijklmnopqrstuvwxyz'.split('');
+
+    let key= '';
+
+    for (let i= 0; i < length; i++) {
+        let hash= Math.floor(Math.random()*2)+1;
+        let model= Math.floor(Math.random()*2)+1;
+        let randAlpha= Math.floor(Math.random()*alphabets.length);
+
+        if (hash === 1) {
+            key+= Math.floor(Math.random()*10);
+        } else {
+            if (model === 1) key+= alphabets[randAlpha].toUpperCase();
+            else key+= alphabets[randAlpha];
+        }
+    }
+
+    return key;
+};
 
 // no 1
 app.post('/api/users/register', upload.single("foto"), async (req,res)=> {
