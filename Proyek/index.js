@@ -10,6 +10,9 @@ require('dotenv').config(); // setting up
 const accessLogStream  = fs.createWriteStream('./218116716.log', {flags:'a'},);
 app.use(express.urlencoded({ extended: true }));
 
+const port = process.env.PORT || 3000;
+
+
 morgan.token('meth',(req,res)=>{
     return `Method: `;
 });
@@ -351,5 +354,5 @@ app.get('/api/tickets/history', cekJWT, async (req,res)=>{
 });
 
 
-app.listen(3000);
+app.listen(port);
 console.log('Listening to port 3000');
