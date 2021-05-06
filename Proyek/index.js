@@ -4,10 +4,10 @@ const db = require("./connection");
 const fs= require("fs");
 const multer = require('multer');
 // const morgan=require('morgan');
+// const accessLogStream  = fs.createWriteStream('./218116716.log', {flags:'a'},);
 const axios = require("axios").default;
 const jwt = require('jsonwebtoken');
 require('dotenv').config(); // setting up
-const accessLogStream  = fs.createWriteStream('./218116716.log', {flags:'a'},);
 app.use(express.urlencoded({ extended: true }));
 
 const port = process.env.PORT || 3000;
