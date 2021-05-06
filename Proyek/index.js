@@ -3,7 +3,7 @@ const app = express();
 const db = require("./connection");
 const fs= require("fs");
 const multer = require('multer');
-const morgan=require('morgan');
+// const morgan=require('morgan');
 const axios = require("axios").default;
 const jwt = require('jsonwebtoken');
 require('dotenv').config(); // setting up
@@ -13,32 +13,32 @@ app.use(express.urlencoded({ extended: true }));
 const port = process.env.PORT || 3000;
 
 // logging
-morgan.token('meth',(req,res)=>{
-    return `Method: `;
-});
-morgan.token('stat',(req,res)=>{
-   return `; Status: ${res.statusCode};`;
-});
-morgan.token('msg',(req,res)=>{
-    let m = '-';
-    if(res.statusCode == 400){
-        m = 'Bad Request';
-    }else if(res.statusCode == 404){
-        m = 'Not Found';
-    }else if(res.statusCode == 401){
-        m = 'Unauthorized';
-    }else if(res.statusCode == 200){
-        m = 'Sukses';
-    }else if(res.statusCode == 201){
-        m = 'Created';
-    }
-    return `Message: ${m};`;
-});
-morgan.token('tgl',(req,res)=>{
-    let d = new Date();
-    return `DateTime: ${d.getDate()}/${(parseInt(d.getMonth()) + 1) + ''}/${d.getFullYear()}`;
-});
-app.use(morgan(`:meth :method; URL: :url:stat :msg :tgl ResponseTime: :response-time ms`,{stream:accessLogStream}));
+// morgan.token('meth',(req,res)=>{
+//     return `Method: `;
+// });
+// morgan.token('stat',(req,res)=>{
+//    return `; Status: ${res.statusCode};`;
+// });
+// morgan.token('msg',(req,res)=>{
+//     let m = '-';
+//     if(res.statusCode == 400){
+//         m = 'Bad Request';
+//     }else if(res.statusCode == 404){
+//         m = 'Not Found';
+//     }else if(res.statusCode == 401){
+//         m = 'Unauthorized';
+//     }else if(res.statusCode == 200){
+//         m = 'Sukses';
+//     }else if(res.statusCode == 201){
+//         m = 'Created';
+//     }
+//     return `Message: ${m};`;
+// });
+// morgan.token('tgl',(req,res)=>{
+//     let d = new Date();
+//     return `DateTime: ${d.getDate()}/${(parseInt(d.getMonth()) + 1) + ''}/${d.getFullYear()}`;
+// });
+// app.use(morgan(`:meth :method; URL: :url:stat :msg :tgl ResponseTime: :response-time ms`,{stream:accessLogStream}));
 
 
 // multer config
