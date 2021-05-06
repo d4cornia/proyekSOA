@@ -13,33 +13,35 @@ app.use(express.urlencoded({ extended: true }));
 const port = process.env.PORT || 3000;
 
 // logging
-// morgan.token('meth',(req,res)=>{
-//     return `Method: `;
-// });
-// morgan.token('stat',(req,res)=>{
-//    return `; Status: ${res.statusCode};`;
-// });
-// morgan.token('msg',(req,res)=>{
-//     let m = '-';
-//     if(res.statusCode == 400){
-//         m = 'Bad Request';
-//     }else if(res.statusCode == 404){
-//         m = 'Not Found';
-//     }else if(res.statusCode == 401){
-//         m = 'Unauthorized';
-//     }else if(res.statusCode == 200){
-//         m = 'Sukses';
-//     }else if(res.statusCode == 201){
-//         m = 'Created';
-//     }
-//     return `Message: ${m};`;
-// });
-// morgan.token('tgl',(req,res)=>{
-//     let d = new Date();
-//     return `DateTime: ${d.getDate()}/${(parseInt(d.getMonth()) + 1) + ''}/${d.getFullYear()}`;
-// });
-// app.use(morgan(`:meth :method; URL: :url:stat :msg :tgl ResponseTime: :response-time ms`,{stream:accessLogStream}));
+morgan.token('meth',(req,res)=>{
+    return `Method: `;
+});
+morgan.token('stat',(req,res)=>{
+   return `; Status: ${res.statusCode};`;
+});
+morgan.token('msg',(req,res)=>{
+    let m = '-';
+    if(res.statusCode == 400){
+        m = 'Bad Request';
+    }else if(res.statusCode == 404){
+        m = 'Not Found';
+    }else if(res.statusCode == 401){
+        m = 'Unauthorized';
+    }else if(res.statusCode == 200){
+        m = 'Sukses';
+    }else if(res.statusCode == 201){
+        m = 'Created';
+    }
+    return `Message: ${m};`;
+});
+morgan.token('tgl',(req,res)=>{
+    let d = new Date();
+    return `DateTime: ${d.getDate()}/${(parseInt(d.getMonth()) + 1) + ''}/${d.getFullYear()}`;
+});
+app.use(morgan(`:meth :method; URL: :url:stat :msg :tgl ResponseTime: :response-time ms`,{stream:accessLogStream}));
 
+
+// multer config
 const storage = multer.diskStorage({
     destination:function(req, file, callback){
         callback(null,'./public/uploads');
@@ -65,7 +67,6 @@ const storage = multer.diskStorage({
         callback(null, (filename+'.'+extension));
     }
 });
-
 function checkFileType(file,cb){
     const filetypes= /jpg|png|jpeg/;
     const extname=filetypes.test(file.originalname.split('.')[file.originalname.split('.').length-1]);
@@ -76,7 +77,6 @@ function checkFileType(file,cb){
         cb(error = 'Error : foto only!');
     }
 }
-
 const upload = multer({
     storage:storage,
     fileFilter: function(req,file,cb){
@@ -84,15 +84,16 @@ const upload = multer({
     }
 });
 
-//fungsi middleware
 
+//fungsi middleware
 const {
     auth,
     cekJWT,
     cekQuota,
 } = require("./middleware");
-//
 
+
+// add in function
 const genKodeKelas = (length) => {
     const alphabets= 'abcdefghijklmnopqrstuvwxyz'.split('');
 
@@ -354,5 +355,6 @@ app.get('/api/tickets/history', cekJWT, async (req,res)=>{
 });
 
 
-app.listen(port);
-console.log('Listening to port 3000');
+app.listen(port, function(){
+    console.log('Listening to port 3000');
+});
