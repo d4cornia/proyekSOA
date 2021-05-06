@@ -12,37 +12,33 @@ app.use(express.urlencoded({ extended: true }));
 
 const port = process.env.PORT || 3000;
 
-
-morgan.token('meth',(req,res)=>{
-    return `Method: `;
-});
-
-morgan.token('stat',(req,res)=>{
-   return `; Status: ${res.statusCode};`;
-});
-
-morgan.token('msg',(req,res)=>{
-    let m = '-';
-    if(res.statusCode == 400){
-        m = 'Bad Request';
-    }else if(res.statusCode == 404){
-        m = 'Not Found';
-    }else if(res.statusCode == 401){
-        m = 'Unauthorized';
-    }else if(res.statusCode == 200){
-        m = 'Sukses';
-    }else if(res.statusCode == 201){
-        m = 'Created';
-    }
-    return `Message: ${m};`;
-});
-
-morgan.token('tgl',(req,res)=>{
-    let d = new Date();
-    return `DateTime: ${d.getDate()}/${(parseInt(d.getMonth()) + 1) + ''}/${d.getFullYear()}`;
-});
-
-app.use(morgan(`:meth :method; URL: :url:stat :msg :tgl ResponseTime: :response-time ms`,{stream:accessLogStream}));
+// logging
+// morgan.token('meth',(req,res)=>{
+//     return `Method: `;
+// });
+// morgan.token('stat',(req,res)=>{
+//    return `; Status: ${res.statusCode};`;
+// });
+// morgan.token('msg',(req,res)=>{
+//     let m = '-';
+//     if(res.statusCode == 400){
+//         m = 'Bad Request';
+//     }else if(res.statusCode == 404){
+//         m = 'Not Found';
+//     }else if(res.statusCode == 401){
+//         m = 'Unauthorized';
+//     }else if(res.statusCode == 200){
+//         m = 'Sukses';
+//     }else if(res.statusCode == 201){
+//         m = 'Created';
+//     }
+//     return `Message: ${m};`;
+// });
+// morgan.token('tgl',(req,res)=>{
+//     let d = new Date();
+//     return `DateTime: ${d.getDate()}/${(parseInt(d.getMonth()) + 1) + ''}/${d.getFullYear()}`;
+// });
+// app.use(morgan(`:meth :method; URL: :url:stat :msg :tgl ResponseTime: :response-time ms`,{stream:accessLogStream}));
 
 const storage = multer.diskStorage({
     destination:function(req, file, callback){
@@ -117,6 +113,11 @@ const genKodeKelas = (length) => {
 
     return key;
 };
+
+app.get('/api/test', function (req, res){
+    return res.send('hello world');
+});
+
 
 // no 1
 app.post('/api/users/register', upload.single("foto"), async (req,res)=> {
