@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Login</title>
 </head>
 <body>
     <div class="err" style="color: red">
         <b><%= errorMessage %></b>
     </div>
 
-    <button><a href="/api/pokemons/keReg">Ke Register</a></button>
+    <button><a href="/api/users/keReg">Ke Register</a></button>
     <br>
     <h1>Login</h1><br>
-    <form action='/api/pokemons/login' method="post">
-        No. Telp : <input type="text" name="notelp" id=""><br>
+    <form action='/api/users/login' method="post">
+        Username : <input type="text" name="uname" id=""><br>
         Password : <input type="password" name="pass" id=""><br>
         <input type="submit" name="login" value="Login"/>
     </form>
-
 </body>
 </html>

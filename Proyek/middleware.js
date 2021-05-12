@@ -2,40 +2,64 @@ const db = require("./connection");
 
 async function cekJWT(req, res, next){
     if(!req.headers['x-auth-token']){
-        return res.status(401).json({
-            'msg':'Unauthorized'
+        return res.status(401).render('pages/login', {
+            message: "",
+            errorMessage: "Unauthorized!",
+            resultArr: []
         });
     }
     let token = req.headers['x-auth-token'];
     let user = null;
     try{
-        user = jwt.verify(token, process.env.secret); // verify token yang dibuat pas login
-        // diverify dari file .env dengan nama variable secret
+        user = jwt.verify(token, process.env.secret);
     }catch(e){
         console.log(e);
-        return res.status(401).json({
-            'err': 'invalid token'
+        req.headers['x-auth-token'] = null;
+        return res.status(401).render('pages/login', {
+            message: "",
+            errorMessage: "Invalid Token!",
+            resultArr: []
         });
     }
 
+    // batasan waktu
     // hasil dalam second
-    console.log(new Date().getTime()/1000 - user.iat);
-    if(new Date().getTime()/1000 - user.iat > 900){
-        return res.status(401).json({
-            'err': 'Token expired'
-        });
-    }
+    // console.log(new Date().getTime()/1000 - user.iat);
+    // if(new Date().getTime()/1000 - user.iat > 900){
+    //     return res.status(401).json({
+    //         'err': 'Token expired'
+    //     });
+    // }
 
     let resu = await db.query(`SELECT * FROM users WHERE username='${user.username}' AND password='${user.password}'`);
 
     req.user = resu[0]; // jika suskses maka akan mendapatkan user yang diverfikasi jwt
 
-    if(req.user.username == 'admin'){
-        req.user['admin'] = 1;
-    }else{
-        req.user['admin'] = 0;
+    next();
+}
+
+async function authSubscriber(req, res, next) {
+    if(req.user.type != 2){
+        // redirect user untuk subscribe
+        return res.status(400).render('pages/subscribe', {
+            message: "",
+            errorMessage: "Khusus Subsciber!",
+            resultArr: []
+        });
     }
-    console.log(req.user.admin);
+    next();
+}
+
+async function authAdmin(req, res, next) {
+    if(req.user.type != 0){
+        // redirect user kelogin
+        req.headers['x-auth-token'] = null;
+        return res.status(400).render('pages/login', {
+            message: "",
+            errorMessage: "Akses hanya admin!",
+            resultArr: []
+        });
+    }
     next();
 }
 
@@ -64,6 +88,8 @@ async function cekQuota(req, res, next){
 
 module.exports = {
     'auth': auth,
+    'authSubscriber': authSubscriber,
+    'authAdmin': authAdmin,
     'cekJWT': cekJWT,
     'cekQuota': cekQuota,
 };
