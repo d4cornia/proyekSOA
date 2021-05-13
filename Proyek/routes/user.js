@@ -144,7 +144,7 @@ router.post('/api/users/register', async (req,res)=> {
             // 1 = biasa
             // 2 = subscriber
 
-            await db.query(`INSERT INTO USERS VALUES('${req.body.notelp}','${req.body.uname}','${req.body.nama}','${req.body.email}', '1','${req.body.pass}')`);
+            await db.query(`INSERT INTO USERS VALUES('','${req.body.notelp}','${req.body.uname}','${req.body.nama}','${req.body.email}', '1','${req.body.pass}', 0)`);
 
             return res.status(201).render('pages/register', {
                 message: "Regristrasi Berhasil, user " + req.body.nama + "!",
@@ -209,45 +209,85 @@ router.get('/api/users/home', cekJWT, async (req,res)=>{
     udata = {
 
     }
-    return res.render('pages/home',{
+    return res.status(200).render('pages/home',{
         message:"",
         errorMessage:"",
         resultArr: udata
     });
 })
 
-
-
-// no 4
-app.put('/api/users/update', cekJWT, upload.single("foto"), async (req,res)=> {
-
+router.post('/api/users/topup', cekJWT, async (req,res)=> {
     try {
-        if(req.body.nama_user && req.body.password){
-            await db.query(`UPDATE users SET nama='${req.body.nama_user}', password='${req.body.password}', foto='${req.file.filename}' WHERE username='${req.user.username}'`);
+        if(req.body.value){
+            await db.query(`UPDATE users SET wallet=${(req.user.wallet + req.body.value)} WHERE id_user='${req.user.id_user}'`);
 
-            return res.status(200).json({
-                'username': req.user.username,
-                'nama_lama': req.user.nama,
-                'nama_baru': req.body.nama_user,
-                'password_lama': req.user.password,
-                'password_baru': req.body.password
+            return res.status(200).render('pages/home',{
+                message:"",
+                errorMessage:"",
+                resultArr: udata
             });
         }else{
-            return res.status(400).json({
-                'msg': 'Inputan belum lengkap'
+            return res.status(400).render('pages/login', {
+                message: "",
+                errorMessage: "Inputan belum lengkap!",
+                resultArr: []
             });
         }
     } catch (error) {
         console.log(error);
-        console.log(req.file);
-        if(!req.file){
-            let err = {
-                "err": "File foto belum dimasukkan!"
-            };
-            return res.status(400).json(err);
-        }
     }
 });
+
+router.post('/api/users/membership', (cekJWT, authSubscriber), async (req,res)=>{
+    let resu = await db.query(`SELECT * FROM MEMBERS WHERE id_user='${req.user.id_user}'`);
+    let d = new Date();
+    let since = d.getDate() + "-" + (parseInt(d.getMonth()) + 1) + "-" + d.getFullYear();
+    if(resu.length == 0){
+        let newduedate = d.getDate() + "-" + (parseInt(d.getMonth()) + 2) + "-" + d.getFullYear();
+        // kalo belum terdaftar, insert
+        await db.query(`INSERT INTO MEMBERS VALUES('','${req.user.id_user}', '-', '${newduedate}', '${since}', '-')`);
+        return res.status(201).render('pages/home',{
+            message:"Berhasil subscribe sebagai member!",
+            errorMessage:"",
+            resultArr: udata
+        });
+    }
+
+    // kalo sudah terdaftar update
+    let newduedate = (parseInt(d.getDate()) + 1)  + "-" + (parseInt(d.getMonth()) + 1) + "-" + d.getFullYear();
+    // kalo belum terdaftar, insert
+    await db.query(`UPDATE MEMBERS SET due_date = '${newduedate}', member_since = '${since}' WHERE id_user='${req.user.id_user}'`);
+    return res.status(200).render('pages/home',{
+        message:"Berhasil subscribe kembali sebagai member!",
+        errorMessage:"",
+        resultArr: udata
+    });
+})
+
+router.delete('/api/users/membership', (cekJWT, authSubscriber), async (req,res)=> {
+    let d = new Date();
+    let now = d.getDate() + "-" + (parseInt(d.getMonth()) + 1) + "-" + d.getFullYear();
+    await db.query(`UPDATE MEMBERS SET unsubscribe = '${now}' WHERE id_user='${req.user.id_user}'`);
+    return res.status(200).render('pages/home',{
+        message:"Berhasil unsubscribe member!",
+        errorMessage:"",
+        resultArr: udata
+    });
+});
+
+router.post('api/users/membership/tagihan', (cekJWT, authSubscriber), async (req, res)=>{
+    let resu = await db.query(`SELECT * FROM MEMBERS WHERE id_user='${req.user.id_user}'`);
+    if(resu.length == 0){
+        return res.status(404).render('pages/home', {
+            message: "",
+            errorMessage: "Member not found!",
+            resultArr: []
+        });
+    }
+    // cek jika tanggal due date - 1 bulan dibawah tanggal last payments maka hitung tagihan else lunas
+
+});
+
 
 // no 5
 app.post('/api/tickets/add', cekJWT, async (req,res)=>{
