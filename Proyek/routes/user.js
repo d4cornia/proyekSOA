@@ -1,10 +1,10 @@
 const express = require("express");
 const multer = require('multer');
-const axios = require("axios").default;
 const jwt = require('jsonwebtoken');
 require('dotenv').config(); // setting up
 const db = require("../connection");
 const router = express.Router();
+const axios = require("axios").default;
 
 let udata = [];
 
@@ -339,7 +339,7 @@ router.post('api/users/membership/bayar', (cekJWT, authSubscriber), async (req, 
     await db.query(`UPDATE MEMBERS SET last_payment = '${now}' WHERE id_user='${req.user.id_user}'`);
     // insert ke history payment
     let resu = await db.query(`SELECT * FROM MEMBERS WHERE id_user = '${req.user.id_user}'`);
-    await db.query(`INSERT INTO PAYMENTS VALUES('','${resu[0].id_member}',${now}, ${})`);
+    await db.query(`INSERT INTO PAYMENTS VALUES('','${resu[0].id_member}',${now}, ${cost})`);
 
     udata = {
 
@@ -354,6 +354,7 @@ router.post('api/users/membership/bayar', (cekJWT, authSubscriber), async (req, 
 router.get('api/users/membership/history', (cekJWT, authSubscriber), async (req,res)=>{
     let resu = await db.query(`SELECT * FROM MEMBERS WHERE id_user = '${req.user.id_user}'`);
     let history =  await db.query(`SELECT * FROM PAYMENT WHERE id_member='${resu[0].id_member}'`);
+
     udata = {
         'history': history
     }
@@ -364,121 +365,26 @@ router.get('api/users/membership/history', (cekJWT, authSubscriber), async (req,
     });
 });
 
-
-
-
-// no 5
-app.post('/api/tickets/add', cekJWT, async (req,res)=>{
-
-    if(req.body.stasiun_asal && req.body.stasiun_tujuan && req.body.jadwal_keberangkatan && req.body.jadwal_tiba && req.body.harga){
-        if(req.user.admin == 0){
-            return res.status(401).json({
-                'msg': 'Bukan admin!'
-            });
+router.get("api/users/matches/:league/:season/:team_id", async(req, res) => {
+    let  options = {
+        method: 'GET',
+        url: 'https://sportsop-soccer-sports-open-data-v1.p.rapidapi.com/v1/leagues/%7Bleague_slug%7D/seasons/%7Bseason_slug%7D/rounds',
+        params: {team_identifier: '{team_identifier}'},
+        headers: {
+            'x-rapidapi-key': '29ef7b5d80mshf99c29e9bea4d85p13145ajsne1780ed3ada5',
+            'x-rapidapi-host': 'sportsop-soccer-sports-open-data-v1.p.rapidapi.com'
         }
+    };
 
-        let kode = 'T';
-        let resu = await db.query(`SELECT * FROM tickets`);
-        if((resu.length + 1) < 10){
-            kode += '000' + (resu.length + 1);
-        }else if((resu.length + 1) < 100){
-            kode += '00' + (resu.length + 1);
-        }else if((resu.length + 1) < 1000){
-            kode += '0' + (resu.length + 1);
-        }else{
-            kode += (resu.length + 1);
-        }
-
-        let jampergi = req.body.jadwal_keberangkatan.split(":");
-        let jamsampai = req.body.jadwal_tiba.split(":");
-
-        await db.query(`INSERT INTO tickets VALUES('${kode}', '${req.body.stasiun_asal}', '${req.body.stasiun_tujuan}', STR_TO_DATE('${(jampergi[0] + " " + jampergi[1])}','%H %i'), STR_TO_DATE('${(jamsampai[0] + " " + jamsampai[1])}','%H %i'), ${req.body.harga})`);
-
-        return res.status(201).json({
-            'kode_tiket': kode,
-            'stasiun_asal': req.body.stasiun_asal,
-            'stasiun_tujuan': req.body.stasiun_tujuan,
-            'jadwal_keberangkatan': req.body.jadwal_keberangkatan,
-            'jadwal_tiba': req.body.jadwal_tiba,
-            'harga': req.body.harga,
-        });
-    }else{
-        return res.status(400).json({
-            'msg': 'Inputan belum lengkap'
-        });
-    }
+    axios.request(options).then(function (response) {
+        res.status(200).json(response.data);
+    }).catch(function (error) {
+        console.error(error);
+    });
 });
 
-// no 6
-app.get('/api/tickets', cekJWT, async (req,res)=> {
-    if(req.query.stasiun_asal && req.query.stasiun_tujuan) {
-        let resu = await db.query(`SELECT kode as kode_tiket, asal as stasiun_asal, tujuan as stasiun_tujuan, harga FROM tickets WHERE upper(asal) LIKE upper('%${req.query.stasiun_asal}%') AND upper(TUJUAN) LIKE upper('%${req.query.stasiun_tujuan}%')`);
+router.get("api/users/topscorer/:league/:season", async(req, res) => {
 
-        return res.status(200).json(resu);
-    }else if(req.query.stasiun_asal){
-        let resu = await db.query(`SELECT kode as kode_tiket, asal as stasiun_asal, tujuan as stasiun_tujuan, harga FROM tickets WHERE upper(asal) LIKE upper('%${req.query.stasiun_asal}%')`);
-
-        return res.status(200).json(resu);
-    }else if(req.query.stasiun_tujuan){
-        let resu = await db.query(`SELECT kode as kode_tiket, asal as stasiun_asal, tujuan as stasiun_tujuan, harga FROM tickets WHERE upper(TUJUAN) LIKE upper('%${req.query.stasiun_tujuan}%')`);
-
-        return res.status(200).json(resu);
-    } else{
-        let resu = await db.query(`SELECT kode as kode_tiket, asal as stasiun_asal, tujuan as stasiun_tujuan, harga FROM tickets`);
-
-        return res.status(200).json(resu);
-    }
-});
-
-// no 7
-app.post('/api/tickets/buy', cekJWT,async (req,res)=>{
-    if(req.body.kode_tiket && req.body.jumlah){
-        let kode = 'TIC';
-        let resu = await db.query(`SELECT * FROM transaksi`);
-        if((resu.length + 1) < 10){
-            kode += '0000' + (resu.length + 1);
-        }else if((resu.length + 1) < 100){
-            kode += '000' + (resu.length + 1);
-        }else if((resu.length + 1) < 1000){
-            kode += '00' + (resu.length + 1);
-        }else if((resu.length + 1) < 10000){
-            kode += '0' + (resu.length + 1);
-        }else{
-            kode += (resu.length + 1);
-        }
-
-        resu = await db.query(`SELECT * FROM tickets WHERE KODE = '${req.body.kode_tiket}'`);
-        if(resu.length == 0){
-            return res.status(404).json({
-                'msg': 'Ticket not found!'
-            });
-        }
-
-        await db.query(`INSERT INTO transaksi VALUES('${kode}', '${req.user.username}','${req.body.kode_tiket}', ${req.body.jumlah}, ${(parseInt(req.body.jumlah + "") * parseInt(resu[0].harga))})`);
-
-        return res.status(201).json({
-            'kode_transaksi': kode,
-            'username': req.user.username,
-            'kode_tiket': req.body.kode_tiket,
-            'jumlah': req.body.jumlah,
-            'total': (parseInt(req.body.jumlah + "") * parseInt(resu[0].harga))
-        });
-    }else{
-        return res.status(400).json({
-            'msg': 'Inputan belum lengkap'
-        });
-    }
-});
-
-//no 8
-app.get('/api/tickets/history', cekJWT, async (req,res)=>{
-    if(req.user.admin == 1){
-        let resu = await db.query(`SELECT kode as kode_transaksi, kode_tiket, jumlah, total FROM transaksi`);
-        return res.status(200).json(resu);
-    }else{
-        let resu = await db.query(`SELECT kode as kode_transaksi, kode_tiket, kode_user as username, jumlah, total FROM transaksi WHERE kode_user='${req.user.username}'`);
-        return res.status(200).json(resu);
-    }
 });
 
 module.exports = router;
