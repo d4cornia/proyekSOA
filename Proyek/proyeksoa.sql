@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 13, 2021 at 12:23 PM
--- Server version: 10.4.16-MariaDB
--- PHP Version: 7.4.12
+-- Generation Time: May 19, 2021 at 02:20 PM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -47,10 +47,17 @@ CREATE TABLE `members` (
   `id_member` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `last_payment` varchar(25) NOT NULL,
-  `due_date` varchar(25) NOT NULL,
+  `end_date` varchar(25) NOT NULL,
   `member_since` varchar(25) NOT NULL,
   `unsubscribe` varchar(25) NOT NULL DEFAULT '-'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `members`
+--
+
+INSERT INTO `members` (`id_member`, `id_user`, `last_payment`, `end_date`, `member_since`, `unsubscribe`) VALUES
+(4, 2, '19-5-2021', '19-6-2021', '19-5-2021', '-');
 
 -- --------------------------------------------------------
 
@@ -63,8 +70,17 @@ CREATE TABLE `payments` (
   `id_payment` int(11) NOT NULL,
   `id_member` int(11) NOT NULL,
   `tanggal_payment` varchar(25) NOT NULL,
-  `value` int(11) NOT NULL
+  `value` int(11) NOT NULL,
+  `keterangan` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `payments`
+--
+
+INSERT INTO `payments` (`id_payment`, `id_member`, `tanggal_payment`, `value`, `keterangan`) VALUES
+(2, 4, '19-5-2021', 100000, 'Bayar tagihan'),
+(3, 4, '19-5-2021', 100000, 'Subscribe sebagai member lagi');
 
 -- --------------------------------------------------------
 
@@ -111,6 +127,13 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id_user`, `no_telp`, `username`, `nama`, `email`, `type`, `password`, `wallet`) VALUES
+(2, '081350991278', 'hope', 'david', 'd4cornia@gmail.com', 2, '123', 100000);
+
+--
 -- Indexes for dumped tables
 --
 
@@ -119,6 +142,12 @@ CREATE TABLE `users` (
 --
 ALTER TABLE `favorite`
   ADD PRIMARY KEY (`id_fav`);
+
+--
+-- Indexes for table `members`
+--
+ALTER TABLE `members`
+  ADD PRIMARY KEY (`id_member`);
 
 --
 -- Indexes for table `payments`
@@ -143,6 +172,46 @@ ALTER TABLE `team`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id_user`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `favorite`
+--
+ALTER TABLE `favorite`
+  MODIFY `id_fav` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `members`
+--
+ALTER TABLE `members`
+  MODIFY `id_member` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `payments`
+--
+ALTER TABLE `payments`
+  MODIFY `id_payment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `stadium`
+--
+ALTER TABLE `stadium`
+  MODIFY `id_stadium` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `team`
+--
+ALTER TABLE `team`
+  MODIFY `id_team` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
