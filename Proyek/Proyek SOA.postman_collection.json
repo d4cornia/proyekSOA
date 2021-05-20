@@ -14,26 +14,26 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
+							"mode": "formdata",
+							"formdata": [
 								{
 									"key": "no_telepon",
-									"value": "081350991278",
+									"value": "081350991277",
 									"type": "text"
 								},
 								{
 									"key": "username",
-									"value": "hope",
+									"value": "bare",
 									"type": "text"
 								},
 								{
 									"key": "nama",
-									"value": "david",
+									"value": "ansel",
 									"type": "text"
 								},
 								{
 									"key": "email",
-									"value": "d4cornia@gmail.com",
+									"value": "ansel@gmail.com",
 									"type": "text"
 								},
 								{
@@ -45,6 +45,11 @@
 									"key": "confirm_password",
 									"value": "123",
 									"type": "text"
+								},
+								{
+									"key": "foto",
+									"type": "file",
+									"src": "/C:/Users/user/Downloads/37976.jpg"
 								}
 							]
 						},
@@ -71,13 +76,8 @@
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "username",
-									"value": "hope",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "123",
+									"key": "api_key",
+									"value": "aYxm0s4MW8K241B0m7I8",
 									"type": "text"
 								}
 							]
@@ -103,7 +103,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhvcGUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTQyNDc4N30.piEH3O6YAIVXMmv20ZgWu6HC3vkziv6jQW6ZvORhOn8",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTUwMTgxM30.IV170BhCe8jEE5AVchAGBobfXOWIY_S2rOeRYWebNf0",
 								"type": "text"
 							}
 						],
@@ -128,7 +128,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhvcGUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTQxNzQzMn0.ftI7TYekepVlRTMps8eM-Tsc8QwZH4-9bt6ImnzYwZQ",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTUwMTgxM30.IV170BhCe8jEE5AVchAGBobfXOWIY_S2rOeRYWebNf0",
 								"type": "text"
 							}
 						],
@@ -163,7 +163,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhvcGUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTQxNzQzMn0.ftI7TYekepVlRTMps8eM-Tsc8QwZH4-9bt6ImnzYwZQ",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTUwMTgxM30.IV170BhCe8jEE5AVchAGBobfXOWIY_S2rOeRYWebNf0",
 								"type": "text"
 							}
 						],
@@ -192,7 +192,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhvcGUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTQxNzQzMn0.ftI7TYekepVlRTMps8eM-Tsc8QwZH4-9bt6ImnzYwZQ",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTUwMTgxM30.IV170BhCe8jEE5AVchAGBobfXOWIY_S2rOeRYWebNf0",
 								"type": "text"
 							}
 						],
@@ -217,7 +217,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhvcGUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTQxNzQzMn0.ftI7TYekepVlRTMps8eM-Tsc8QwZH4-9bt6ImnzYwZQ",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTUwMTgxM30.IV170BhCe8jEE5AVchAGBobfXOWIY_S2rOeRYWebNf0",
 								"type": "text"
 							}
 						],
@@ -243,7 +243,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhvcGUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTQxNzQzMn0.ftI7TYekepVlRTMps8eM-Tsc8QwZH4-9bt6ImnzYwZQ",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTUwMTgxM30.IV170BhCe8jEE5AVchAGBobfXOWIY_S2rOeRYWebNf0",
 								"type": "text"
 							}
 						],
@@ -273,7 +273,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhvcGUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTQxNzQzMn0.ftI7TYekepVlRTMps8eM-Tsc8QwZH4-9bt6ImnzYwZQ",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTUwMTgxM30.IV170BhCe8jEE5AVchAGBobfXOWIY_S2rOeRYWebNf0",
 								"type": "text"
 							}
 						],
@@ -303,7 +303,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhvcGUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTQxNzQzMn0.ftI7TYekepVlRTMps8eM-Tsc8QwZH4-9bt6ImnzYwZQ",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTUwMTgxM30.IV170BhCe8jEE5AVchAGBobfXOWIY_S2rOeRYWebNf0",
 								"type": "text"
 							}
 						],
@@ -329,7 +329,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTUwMTgxM30.IV170BhCe8jEE5AVchAGBobfXOWIY_S2rOeRYWebNf0",
 								"type": "text"
 							}
 						],
@@ -371,7 +371,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTUwMTgxM30.IV170BhCe8jEE5AVchAGBobfXOWIY_S2rOeRYWebNf0",
 								"type": "text"
 							}
 						],
@@ -391,12 +391,14 @@
 								{
 									"key": "league",
 									"value": "Bundesliga",
-									"type": "string"
+									"type": "text",
+									"enabled": true
 								},
 								{
 									"key": "season",
 									"value": "15-16",
-									"type": "string"
+									"type": "text",
+									"enabled": true
 								}
 							]
 						}

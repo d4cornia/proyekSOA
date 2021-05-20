@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 19, 2021 at 02:20 PM
+-- Generation Time: May 20, 2021 at 11:14 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -123,15 +123,18 @@ CREATE TABLE `users` (
   `email` varchar(25) NOT NULL,
   `type` int(11) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `wallet` int(11) NOT NULL DEFAULT 0
+  `wallet` int(11) NOT NULL DEFAULT 0,
+  `foto` varchar(255) NOT NULL,
+  `api_key` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id_user`, `no_telp`, `username`, `nama`, `email`, `type`, `password`, `wallet`) VALUES
-(2, '081350991278', 'hope', 'david', 'd4cornia@gmail.com', 2, '123', 100000);
+INSERT INTO `users` (`id_user`, `no_telp`, `username`, `nama`, `email`, `type`, `password`, `wallet`, `foto`, `api_key`) VALUES
+(2, '081350991278', 'hope', 'david', 'd4cornia@gmail.com', 2, '123', 100000, '', ''),
+(3, '081350991277', 'bare', 'ansel', 'ansel@gmail.com', 1, '123', 0, './public/uploads/bare.jpg', 'aYxm0s4MW8K241B0m7I8');
 
 --
 -- Indexes for dumped tables
@@ -211,7 +214,7 @@ ALTER TABLE `team`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -6,8 +6,6 @@ const db = require("../connection");
 const router = express.Router();
 const axios = require("axios").default;
 
-let udata = [];
-
 
 // multer config
 const storage = multer.diskStorage({
@@ -58,13 +56,13 @@ const {
     cekJWT,
     authSubscriber,
     authAdmin,
-    auth,
+    cekMembershipExpired,
     cekTagihanBulanLalu,
 } = require("../middleware");
 
 
 // add in function
-const genKodeKelas = (length) => {
+const genKodeAPI = (length) => {
     const alphabets= 'abcdefghijklmnopqrstuvwxyz'.split('');
 
     let key= '';
@@ -86,29 +84,13 @@ const genKodeKelas = (length) => {
 };
 
 
-router.get('/keLogin', (req,res) => {
-    req.headers['x-auth-token'] = null;
-    return res.render('pages/login',{
-        message:"",
-        errorMessage:"",
-        resultArr:[]
-    });
-});
 
-router.get('/keReg', (req,res) => {
-    return res.render('pages/register',{
-        message:"",
-        errorMessage:"",
-        resultArr:[]
-    });
-});
-
-
-router.post('/register', async (req,res)=> {
+router.post('/register', upload.single("foto"), async (req,res)=> {
     // let isUpperLowerNumber = /^(?![A-Z]+$)(?![a-z]+$)(?![0-9]+$)(?![A-Z0-9]+$)(?![a-z0-9]+$)[0-9A-Za-z]+$/.test(req.body.test);
     // let tgl = req.body.tanggal_peminjaman.split("-");
     // await db.query(`INSERT INTO PEMINJAMAN VALUES('${}','${}',STR_TO_DATE('${(tgl[0] + " " + tgl[1] + " " + tgl[2])}','%d %m %Y'),'${}')`);
     try {
+        let dir = './public/uploads/' + req.file.filename;
         if(req.body.no_telepon && req.body.username && req.body.nama && req.body.email && req.body.confirm_password && req.body.password){
             // cek no telp angka saja
             let num = /^\d+$/.test(req.body.no_telepon);
@@ -137,13 +119,14 @@ router.post('/register', async (req,res)=> {
             // 0 = admin
             // 1 = biasa
             // 2 = subscriber
-
-            await db.query(`INSERT INTO USERS VALUES('','${req.body.no_telepon}','${req.body.username}','${req.body.nama}','${req.body.email}', '1','${req.body.password}', 0)`);
+            let api_key = genKodeAPI(20);
+            await db.query(`INSERT INTO USERS VALUES('','${req.body.no_telepon}','${req.body.username}','${req.body.nama}','${req.body.email}', '1','${req.body.password}', 0,'${dir}', '${api_key}')`);
 
             return res.status(201).json({
                 'No Telepon': req.body.no_telepon,
                 'Username' : req.body.username,
                 'Nama User': req.body.nama,
+                'API Key': api_key,
                 'Status': 'Register Berhasil!'
             });
         }else{
@@ -152,40 +135,32 @@ router.post('/register', async (req,res)=> {
             });
         }
     } catch (error) {
+        return res.status(400).json({
+            'error msg': 'File foto belum dimasukkan!'
+        });
         console.log(error);
     }
 });
 
 router.post('/login', async (req,res)=> {
-    if(req.body.username && req.body.password){
+    if(req.body.api_key){
 
-        let resu = await db.query(`SELECT * FROM users WHERE username='${req.body.username}' AND password='${req.body.password}'`);
+        let resu = await db.query(`SELECT * FROM users WHERE api_key='${req.body.api_key}'`);
 
-        if(resu.length == 0){
+        if(resu.length == 0) {
             return res.status(400).json({
                 'error msg': 'Username/Password salah!'
             });
-            /*return res.status(400).render('pages/login', {
-                message: "",
-                errorMessage: "Username/Password salah!",
-                resultArr: []
-            });*/
         }
 
         // membuat token dari jwt
         let token = jwt.sign({
-                'username':req.body.username,
-                'password':req.body.password
+                'username':resu[0].username,
+                'password':resu[0].password
             },
             process.env.secret
         );
         req.headers['x-auth-token'] = token;
-
-        /*let listBola = await axios.get(`https://pokeapi.co/api/v2/type`);
-        udata = {
-            'nama': resu[0].nama,
-            'listBola': listBola.data.results
-        }*/
 
         return res.status(200).json({
             'Nama User': resu[0].nama,
@@ -196,26 +171,8 @@ router.post('/login', async (req,res)=> {
         return res.status(400).json({
             'error msg': 'Inputan Belum lengkap!'
         });
-        /*return res.status(400).render('pages/login', {
-            message: "",
-            errorMessage: "Inputan belum lengkap!",
-            resultArr: []
-        });*/
     }
 });
-
-/*
-router.get('/home', cekJWT, async (req,res)=>{
-    udata = {
-
-    }
-    return res.status(200).render('pages/home',{
-        message:"",
-        errorMessage:"",
-        resultArr: udata
-    });
-})
-*/
 
 router.get('/wallet', cekJWT, async (req,res)=> {
     let resu = await db.query(`SELECT * FROM users WHERE id_user='${req.user.id_user}'`);
@@ -233,11 +190,6 @@ router.post('/topup', cekJWT, async (req,res)=> {
                 return res.status(400).json({
                     'error msg': 'Topup harus lebih besar dari 0!'
                 });
-                /*return res.status(400).render('pages/home', {
-                    message: "",
-                    errorMessage: "Topup harus lebih besar dari 0!",
-                    resultArr: []
-                });*/
             }
             await db.query(`UPDATE users SET wallet=${(parseInt(req.user.wallet) + parseInt(req.body.value))} WHERE id_user='${req.user.id_user}'`);
 
@@ -274,11 +226,6 @@ router.post('/membership', cekJWT, async (req,res)=>{
             'Subscription Date': since,
             'End Date': newenddate
         });
-        /*return res.status(201).render('pages/home',{
-            message:"Berhasil subscribe sebagai member!",
-            errorMessage:"",
-            resultArr: udata
-        });*/
     }
 
     if(req.user.type != 1){
@@ -311,11 +258,6 @@ router.post('/membership', cekJWT, async (req,res)=>{
         'End Date': newenddate,
         'Wallet': sisa
     });
-    /*return res.status(200).render('pages/home',{
-        message:"Berhasil subscribe kembali sebagai member!",
-        errorMessage:"",
-        resultArr: udata
-    });*/
 })
 
 router.delete('/membership', [cekJWT, authSubscriber], async (req,res)=> {
@@ -342,11 +284,6 @@ router.delete('/membership', [cekJWT, authSubscriber], async (req,res)=> {
         'Status': 'Sukses unsubscribe member',
         'Date unsubscribe': now
     });
-    /*return res.status(200).render('pages/home',{
-        message:"Berhasil unsubscribe member!",
-        errorMessage:"",
-        resultArr: udata
-    });*/
 });
 
 let cost = 100000;
@@ -356,11 +293,6 @@ router.get('/membership/tagihan', [cekJWT, authSubscriber], async (req, res)=>{
         return res.status(400).json({
             'error msg': 'Member not found!'
         });
-        /*return res.status(404).render('pages/home', {
-            message: "",
-            errorMessage: "Member not found!",
-            resultArr: []
-        });*/
     }
 
     // cek jika tanggal end date - 1 bulan dibawah tanggal last payments maka hitung tagihan else lunas
@@ -377,14 +309,6 @@ router.get('/membership/tagihan', [cekJWT, authSubscriber], async (req, res)=>{
             'End Date': resu[0].end_date,
             'Tagihan Bulan ini': 'Lunas'
         });
-        /*udata = {
-            'tagihan': 'Lunas'
-        }
-        return res.status(200).render('pages/home',{
-            message:"",
-            errorMessage:"",
-            resultArr: udata
-        });*/
     }
 
     let tagihan = cost;
@@ -395,14 +319,6 @@ router.get('/membership/tagihan', [cekJWT, authSubscriber], async (req, res)=>{
         'End Date': resu[0].end_date,
         'Tagihan Bulan ini': tagihan
     });
-    /*udata = {
-        'tagihan': tagihan
-    }
-    return res.status(200).render('pages/home',{
-        message:"",
-        errorMessage:"",
-        resultArr: udata
-    });*/
 });
 
 router.post('/membership/bayar', [cekJWT, authSubscriber], async (req, res)=> {
@@ -421,14 +337,6 @@ router.post('/membership/bayar', [cekJWT, authSubscriber], async (req, res)=> {
             'End Date': resu[0].end_date,
             'Tagihan Bulan ini': 'Lunas'
         });
-        /*udata = {
-            'tagihan': 'Lunas'
-        }
-        return res.status(200).render('pages/home',{
-            message:"",
-            errorMessage:"",
-            resultArr: udata
-        });*/
     }
 
     let sisa = (parseInt(req.user.wallet) - cost);
@@ -459,20 +367,12 @@ router.post('/membership/bayar', [cekJWT, authSubscriber], async (req, res)=> {
         'Wallet': sisa,
         'Status': 'Berhasil membayar tagihan bulan ini'
     });
-    /*udata = {
-
-    }
-    return res.status(200).render('pages/home',{
-        message:"Berhasil membayar tagihan!",
-        errorMessage:"",
-        resultArr: udata
-    });*/
 });
 
 router.post('/membership/extend', [cekJWT, authSubscriber, cekTagihanBulanLalu], async (req, res) =>{
     // extend end date
     let d = new Date();
-    console.log(d.getMonth());
+    // new end date = 1 bulan dari hari dia extend
     let newenddate = (parseInt(d.getDate()))  + "-" + (parseInt(d.getMonth()) + 2) + "-" + d.getFullYear();
     await db.query(`UPDATE MEMBERS SET end_date = '${newenddate}' WHERE id_user='${req.user.id_user}'`);
     return res.status(200).json({
@@ -498,23 +398,15 @@ router.get('/membership/history', [cekJWT, authSubscriber], async (req,res)=>{
     }
 
     return res.status(200).json(his);
-    /*udata = {
-        'history': history
-    }
-    return res.status(200).render('pages/home',{
-        message:"",
-        errorMessage:"",
-        resultArr: udata
-    });*/
 });
 
-router.get("/matches/:league/:season/:team_id", [cekJWT], async(req, res) => {
+router.get("/matches/:league/:season/:team_id", [cekJWT, authSubscriber, cekMembershipExpired], async(req, res) => {
     let options = {
         method: 'GET',
         url: `https://sportsop-soccer-sports-open-data-v1.p.rapidapi.com/v1/leagues/${req.params.league}/seasons/${req.params.season}/rounds`,
-        params: {team_identifier: `{${req.params.season}}`},
+        params: {team_identifier: `{${req.params.team_id}}`},
         headers: {
-            'x-rapidapi-key': '29ef7b5d80mshf99c29e9bea4d85p13145ajsne1780ed3ada5',
+            'x-rapidapi-key': '7517210b1dmshe9ef9ccb1568a9ep14ebe4jsn6614d392ce9e',
             'x-rapidapi-host': 'sportsop-soccer-sports-open-data-v1.p.rapidapi.com'
         }
     };
@@ -526,12 +418,12 @@ router.get("/matches/:league/:season/:team_id", [cekJWT], async(req, res) => {
     });
 });
 
-router.get("/topscorer/:league/:season", [cekJWT], async(req, res) => {
+router.get("/topscorer/:league/:season", [cekJWT, authSubscriber, cekMembershipExpired], async(req, res) => {
     let options = {
         method: 'GET',
         url: `https://sportsop-soccer-sports-open-data-v1.p.rapidapi.com/v1/leagues/${req.params.league}/seasons/${req.params.season}//topscorers`,
         headers: {
-            'x-rapidapi-key': '29ef7b5d80mshf99c29e9bea4d85p13145ajsne1780ed3ada5',
+            'x-rapidapi-key': '7517210b1dmshe9ef9ccb1568a9ep14ebe4jsn6614d392ce9e',
             'x-rapidapi-host': 'sportsop-soccer-sports-open-data-v1.p.rapidapi.com'
         }
     };
