@@ -334,7 +334,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/api/users/matches/:league/:season/:team_id",
+							"raw": "{{base_url}}/api/users/matches/:nama_team_1/:nama_team_2",
 							"host": [
 								"{{base_url}}"
 							],
@@ -342,22 +342,17 @@
 								"api",
 								"users",
 								"matches",
-								":league",
-								":season",
-								":team_id"
+								":nama_team_1",
+								":nama_team_2"
 							],
 							"variable": [
 								{
-									"key": "league",
-									"value": "Bundesliga"
+									"key": "nama_team_1",
+									"value": "atalanta"
 								},
 								{
-									"key": "season",
-									"value": "15-16"
-								},
-								{
-									"key": "team_id",
-									"value": ""
+									"key": "nama_team_2",
+									"value": "ac milan"
 								}
 							]
 						}
@@ -365,7 +360,7 @@
 					"response": []
 				},
 				{
-					"name": "View Top Scorer",
+					"name": "View History Tim",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -376,29 +371,20 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/api/users/topscorer/:league/:season",
+							"raw": "{{base_url}}/api/users/history/:nama_team",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
 								"users",
-								"topscorer",
-								":league",
-								":season"
+								"history",
+								":nama_team"
 							],
 							"variable": [
 								{
-									"key": "league",
-									"value": "Bundesliga",
-									"type": "text",
-									"enabled": true
-								},
-								{
-									"key": "season",
-									"value": "15-16",
-									"type": "text",
-									"enabled": true
+									"key": "nama_team",
+									"value": "ac milan"
 								}
 							]
 						}

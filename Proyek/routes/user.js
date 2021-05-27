@@ -108,7 +108,7 @@ router.post('/register', upload.single("foto"), async (req,res)=> {
             }
 
             // cek tidak ada usernmae dan email kembar
-            let resu = await db.query(`SELECT * FROM USERS WHERE username='${req.body.username}' OR email='${req.body.email}'`);
+            let resu = await db.query(`SELECT * FROM users WHERE username='${req.body.username}' OR email='${req.body.email}'`);
             if(resu.length > 0){
                 return res.status(400).json({
                     'error msg': 'Username / Email telah digunakan!'
@@ -120,7 +120,7 @@ router.post('/register', upload.single("foto"), async (req,res)=> {
             // 1 = biasa
             // 2 = subscriber
             let api_key = genKodeAPI(20);
-            await db.query(`INSERT INTO USERS VALUES('','${req.body.no_telepon}','${req.body.username}','${req.body.nama}','${req.body.email}', '1','${req.body.password}', 0,'${dir}', '${api_key}')`);
+            await db.query(`INSERT INTO users VALUES('','${req.body.no_telepon}','${req.body.username}','${req.body.nama}','${req.body.email}', '1','${req.body.password}', 0,'${dir}', '${api_key}')`);
 
             return res.status(201).json({
                 'No Telepon': req.body.no_telepon,
@@ -209,16 +209,16 @@ router.post('/topup', cekJWT, async (req,res)=> {
 });
 
 router.post('/membership', cekJWT, async (req,res)=>{
-    let resu = await db.query(`SELECT * FROM MEMBERS WHERE id_user='${req.user.id_user}'`);
+    let resu = await db.query(`SELECT * FROM members WHERE id_user='${req.user.id_user}'`);
     let d = new Date();
     let since = d.getDate() + "-" + (parseInt(d.getMonth()) + 1) + "-" + d.getFullYear();
     if(resu.length == 0){
         // end date daftar baru 1 bulan
         let newenddate = d.getDate() + "-" + (parseInt(d.getMonth()) + 2) + "-" + d.getFullYear();
         // kalo belum terdaftar, insert
-        await db.query(`INSERT INTO MEMBERS VALUES('','${req.user.id_user}', '-', '${newenddate}', '${since}', '-')`);
+        await db.query(`INSERT INTO members VALUES('','${req.user.id_user}', '-', '${newenddate}', '${since}', '-')`);
         // Update tipe member
-        await db.query(`UPDATE USERS SET TYPE = 2 WHERE id_user='${req.user.id_user}'`);
+        await db.query(`UPDATE users SET TYPE = 2 WHERE id_user='${req.user.id_user}'`);
 
         return res.status(200).json({
             'Nama User': req.user.nama,
@@ -244,12 +244,12 @@ router.post('/membership', cekJWT, async (req,res)=>{
         });
     }
     let newenddate = (parseInt(d.getDate()))  + "-" + (parseInt(d.getMonth()) + 2) + "-" + d.getFullYear();
-    await db.query(`UPDATE MEMBERS SET last_payment = '${since}', end_date = '${newenddate}', member_since = '${since}', unsubscribe = '-' WHERE id_user='${req.user.id_user}'`);
+    await db.query(`UPDATE members SET last_payment = '${since}', end_date = '${newenddate}', member_since = '${since}', unsubscribe = '-' WHERE id_user='${req.user.id_user}'`);
     // Update tipe member
-    await db.query(`UPDATE USERS SET wallet = ${sisa}, TYPE = 2 WHERE id_user='${req.user.id_user}'`);
+    await db.query(`UPDATE users SET wallet = ${sisa}, TYPE = 2 WHERE id_user='${req.user.id_user}'`);
     // insert ke history payment
-    resu = await db.query(`SELECT * FROM MEMBERS WHERE id_user = '${req.user.id_user}'`);
-    await db.query(`INSERT INTO PAYMENTS VALUES('','${resu[0].id_member}', '${since}', ${cost}), 'Bayar Subcribe menjadi Membership Kembali'`);
+    resu = await db.query(`SELECT * FROM members WHERE id_user = '${req.user.id_user}'`);
+    await db.query(`INSERT INTO payments VALUES('','${resu[0].id_member}', '${since}', ${cost}), 'Bayar Subcribe menjadi Membership Kembali'`);
 
     return res.status(200).json({
         'Nama User': req.user.nama,
@@ -261,7 +261,7 @@ router.post('/membership', cekJWT, async (req,res)=>{
 })
 
 router.delete('/membership', [cekJWT, authSubscriber], async (req,res)=> {
-    let resu = await db.query(`SELECT * FROM MEMBERS WHERE id_user='${req.user.id_user}'`);
+    let resu = await db.query(`SELECT * FROM members WHERE id_user='${req.user.id_user}'`);
 
     let tgl = resu[0].last_payment.split("-");
     let lastpayment = new Date(parseInt(tgl[2]), parseInt(tgl[1]) - 1, tgl[0]);
@@ -277,8 +277,8 @@ router.delete('/membership', [cekJWT, authSubscriber], async (req,res)=> {
 
     let d = new Date();
     let now = d.getDate() + "-" + (parseInt(d.getMonth()) + 1) + "-" + d.getFullYear();
-    await db.query(`UPDATE MEMBERS SET unsubscribe = '${now}' WHERE id_user='${req.user.id_user}'`);
-    await db.query(`UPDATE USERS SET TYPE = 1 WHERE id_user='${req.user.id_user}'`);
+    await db.query(`UPDATE members SET unsubscribe = '${now}' WHERE id_user='${req.user.id_user}'`);
+    await db.query(`UPDATE users SET TYPE = 1 WHERE id_user='${req.user.id_user}'`);
     return res.status(200).json({
         'Nama User': req.user.nama,
         'Status': 'Sukses unsubscribe member',
@@ -288,7 +288,7 @@ router.delete('/membership', [cekJWT, authSubscriber], async (req,res)=> {
 
 let cost = 100000;
 router.get('/membership/tagihan', [cekJWT, authSubscriber], async (req, res)=>{
-    let resu = await db.query(`SELECT * FROM MEMBERS WHERE id_user='${req.user.id_user}'`);
+    let resu = await db.query(`SELECT * FROM members WHERE id_user='${req.user.id_user}'`);
     if(resu.length == 0){
         return res.status(400).json({
             'error msg': 'Member not found!'
@@ -322,7 +322,7 @@ router.get('/membership/tagihan', [cekJWT, authSubscriber], async (req, res)=>{
 });
 
 router.post('/membership/bayar', [cekJWT, authSubscriber], async (req, res)=> {
-    let resu = await db.query(`SELECT * FROM MEMBERS WHERE id_user='${req.user.id_user}'`);
+    let resu = await db.query(`SELECT * FROM members WHERE id_user='${req.user.id_user}'`);
 
     // cek jika tanggal end date - 1 bulan dibawah tanggal last payments maka bayar else lunas
     let tgl = resu[0].last_payment.split("-");
@@ -351,15 +351,15 @@ router.post('/membership/bayar', [cekJWT, authSubscriber], async (req, res)=> {
 
     // kurangin wallet
     let d = new Date();
-    await db.query(`UPDATE USERS SET wallet = ${sisa} WHERE id_user='${req.user.id_user}'`);
+    await db.query(`UPDATE users SET wallet = ${sisa} WHERE id_user='${req.user.id_user}'`);
 
     // update last payment
     let now = d.getDate() + "-" + (parseInt(d.getMonth()) + 1) + "-" + d.getFullYear();
-    await db.query(`UPDATE MEMBERS SET last_payment = '${now}' WHERE id_user='${req.user.id_user}'`);
+    await db.query(`UPDATE members SET last_payment = '${now}' WHERE id_user='${req.user.id_user}'`);
 
     // insert ke history payment
-    resu = await db.query(`SELECT * FROM MEMBERS WHERE id_user = '${req.user.id_user}'`);
-    await db.query(`INSERT INTO PAYMENTS VALUES('','${resu[0].id_member}', '${now}', ${cost}, 'Bayar Tagihan Bulanan')`);
+    resu = await db.query(`SELECT * FROM members WHERE id_user = '${req.user.id_user}'`);
+    await db.query(`INSERT INTO payments VALUES('','${resu[0].id_member}', '${now}', ${cost}, 'Bayar Tagihan Bulanan')`);
 
     return res.status(200).json({
         'Nama User': req.user.nama,
@@ -374,7 +374,7 @@ router.post('/membership/extend', [cekJWT, authSubscriber, cekTagihanBulanLalu],
     let d = new Date();
     // new end date = 1 bulan dari hari dia extend
     let newenddate = (parseInt(d.getDate()))  + "-" + (parseInt(d.getMonth()) + 2) + "-" + d.getFullYear();
-    await db.query(`UPDATE MEMBERS SET end_date = '${newenddate}' WHERE id_user='${req.user.id_user}'`);
+    await db.query(`UPDATE members SET end_date = '${newenddate}' WHERE id_user='${req.user.id_user}'`);
     return res.status(200).json({
         'Nama User': req.user.nama,
         'End date': newenddate,
@@ -383,8 +383,8 @@ router.post('/membership/extend', [cekJWT, authSubscriber, cekTagihanBulanLalu],
 });
 
 router.get('/membership/history', [cekJWT, authSubscriber], async (req,res)=>{
-    let resu = await db.query(`SELECT * FROM MEMBERS WHERE id_user = '${req.user.id_user}'`);
-    let history =  await db.query(`SELECT * FROM PAYMENTS WHERE id_member='${resu[0].id_member}'`);
+    let resu = await db.query(`SELECT * FROM members WHERE id_user = '${req.user.id_user}'`);
+    let history =  await db.query(`SELECT * FROM payments WHERE id_member='${resu[0].id_member}'`);
 
     let his = [];
     for (let i = 0; i < history.length; i++) {
@@ -400,14 +400,27 @@ router.get('/membership/history', [cekJWT, authSubscriber], async (req,res)=>{
     return res.status(200).json(his);
 });
 
-router.get("/matches/:league/:season/:team_id", [cekJWT, authSubscriber, cekMembershipExpired], async(req, res) => {
+router.get("/matches/:nama_team_1/:nama_team_2", [cekJWT, authSubscriber, cekMembershipExpired], async(req, res) => {
+    let resu1 = await db.query(`SELECT * FROM team WHERE UPPER(nama) = UPPER('${req.params.nama_team_1}')`);
+    let resu2 = await db.query(`SELECT * FROM team WHERE UPPER(nama) = UPPER('${req.params.nama_team_2}')`);
+    if(resu1.length == 0){
+        return res.status(404).json({
+            'err msg': 'nama_team_1 not found!'
+        });
+    }
+    if(resu2.length == 0){
+        return res.status(404).json({
+            'err msg': 'nama_team_2 not found!'
+        });
+    }
+
     let options = {
         method: 'GET',
-        url: `https://sportsop-soccer-sports-open-data-v1.p.rapidapi.com/v1/leagues/${req.params.league}/seasons/${req.params.season}/rounds`,
-        params: {team_identifier: `{${req.params.team_id}}`},
+        url: 'https://soccer-football-info.p.rapidapi.com/teams/versus/',
+        params: {x: `${resu1[0].id_team}`, y: `${resu2[0].id_team}`, w: '6m', l: 'en_US'},
         headers: {
-            'x-rapidapi-key': '7517210b1dmshe9ef9ccb1568a9ep14ebe4jsn6614d392ce9e',
-            'x-rapidapi-host': 'sportsop-soccer-sports-open-data-v1.p.rapidapi.com'
+            'x-rapidapi-key': '8e4f543e6fmsh137a9d0400df44ap1c3d59jsn090091500313',
+            'x-rapidapi-host': 'soccer-football-info.p.rapidapi.com'
         }
     };
 
@@ -418,13 +431,21 @@ router.get("/matches/:league/:season/:team_id", [cekJWT, authSubscriber, cekMemb
     });
 });
 
-router.get("/topscorer/:league/:season", [cekJWT, authSubscriber, cekMembershipExpired], async(req, res) => {
+router.get("/history/:nama_team", [cekJWT, authSubscriber, cekMembershipExpired], async(req, res) => {
+    let resu = await db.query(`SELECT * FROM team WHERE UPPER(nama) = UPPER('${req.params.nama_team}')`);
+    if(resu.length == 0){
+        return res.status(404).json({
+            'err msg': 'nama_team not found!'
+        });
+    }
+
     let options = {
         method: 'GET',
-        url: `https://sportsop-soccer-sports-open-data-v1.p.rapidapi.com/v1/leagues/${req.params.league}/seasons/${req.params.season}//topscorers`,
+        url: 'https://soccer-football-info.p.rapidapi.com/teams/history/',
+        params: {i: `${resu[0].id_team}`, l: 'en_US', w: '6m'},
         headers: {
-            'x-rapidapi-key': '7517210b1dmshe9ef9ccb1568a9ep14ebe4jsn6614d392ce9e',
-            'x-rapidapi-host': 'sportsop-soccer-sports-open-data-v1.p.rapidapi.com'
+            'x-rapidapi-key': '8e4f543e6fmsh137a9d0400df44ap1c3d59jsn090091500313',
+            'x-rapidapi-host': 'soccer-football-info.p.rapidapi.com'
         }
     };
 
