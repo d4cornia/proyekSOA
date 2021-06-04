@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "d3741e8a-f4f6-42ce-8efa-7297e7a91d5d",
+		"_postman_id": "2aabeead-e462-44a6-9a8b-256ee3571d69",
 		"name": "Proyek SOA",
+		"description": "Dokumentasi Proyek SOA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -63,7 +64,43 @@
 								"users",
 								"register"
 							]
-						}
+						},
+						"description": "Register user dilakukan dengan mengisikan\n- no_telepon\n- username\n- nama\n- email\n- password\n- confirm_password\n- foto"
+					},
+					"response": []
+				},
+				{
+					"name": "Api key",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "bare",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/apikey",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"apikey"
+							]
+						},
+						"description": "berguna untuk mendapatkan apikey, dengan mengisikan\n- username\n- password"
 					},
 					"response": []
 				},
@@ -77,7 +114,7 @@
 							"urlencoded": [
 								{
 									"key": "api_key",
-									"value": "aYxm0s4MW8K241B0m7I8",
+									"value": "4p7La53Rm5jE3jIq3nBq",
 									"type": "text"
 								}
 							]
@@ -92,7 +129,8 @@
 								"users",
 								"login"
 							]
-						}
+						},
+						"description": "Login user dilakukan untuk mendapatkan x-auth-token, dengan mengisikan\n- api_key -> didapat dari awal register atau dari endpoint /apikey"
 					},
 					"response": []
 				},
@@ -103,7 +141,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTUwMTgxM30.IV170BhCe8jEE5AVchAGBobfXOWIY_S2rOeRYWebNf0",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMjgwMTQyOH0.e0RcnjQ1LuSzo_3UUS4AZCQDG8S2OUKr5qVRLqA9Q1k",
 								"type": "text"
 							}
 						],
@@ -117,7 +155,8 @@
 								"users",
 								"wallet"
 							]
-						}
+						},
+						"description": "Berguna untuk melihat sisa wallet yang dimiliki user\n\nDibutuhkan \n- x-auth-token"
 					},
 					"response": []
 				},
@@ -128,7 +167,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTUwMTgxM30.IV170BhCe8jEE5AVchAGBobfXOWIY_S2rOeRYWebNf0",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMjgwMTQyOH0.e0RcnjQ1LuSzo_3UUS4AZCQDG8S2OUKr5qVRLqA9Q1k",
 								"type": "text"
 							}
 						],
@@ -152,7 +191,8 @@
 								"users",
 								"topup"
 							]
-						}
+						},
+						"description": "Berguna untuk mengtop up wallet user, dengan mengisikan\n- value : nominal yang ingin ditopup kedalam akun user\n\nDibutuhkan \n- x-auth-token"
 					},
 					"response": []
 				},
@@ -163,7 +203,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTUwMTgxM30.IV170BhCe8jEE5AVchAGBobfXOWIY_S2rOeRYWebNf0",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMjgwMTQyOH0.e0RcnjQ1LuSzo_3UUS4AZCQDG8S2OUKr5qVRLqA9Q1k",
 								"type": "text"
 							}
 						],
@@ -181,7 +221,8 @@
 								"users",
 								"membership"
 							]
-						}
+						},
+						"description": "Berguna untuk mendaftarkan akun user dari member biasa, menjadi subsciber member\n\nDibutuhkan \n- x-auth-token\n- wallet : 100000 (jika akun pernah terdaftar sebagai subscriber), 0 (jika akun baru pertama kali daftar sebagai subscriber)"
 					},
 					"response": []
 				},
@@ -192,7 +233,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTUwMTgxM30.IV170BhCe8jEE5AVchAGBobfXOWIY_S2rOeRYWebNf0",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMjgwMTQyOH0.e0RcnjQ1LuSzo_3UUS4AZCQDG8S2OUKr5qVRLqA9Q1k",
 								"type": "text"
 							}
 						],
@@ -206,7 +247,8 @@
 								"users",
 								"membership"
 							]
-						}
+						},
+						"description": "Berguna untuk tidak menjadi subscriber member\n\nDibutuhkan \n- x-auth-token\n- semua tagihan lunas / tidak ada tagihan"
 					},
 					"response": []
 				},
@@ -232,7 +274,8 @@
 								"membership",
 								"tagihan"
 							]
-						}
+						},
+						"description": "Berguna untuk melihat tagihan yang belum dibayar\n\nDibutuhkan \n- x-auth-token"
 					},
 					"response": []
 				},
@@ -243,7 +286,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTUwMTgxM30.IV170BhCe8jEE5AVchAGBobfXOWIY_S2rOeRYWebNf0",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMjgwMTQyOH0.e0RcnjQ1LuSzo_3UUS4AZCQDG8S2OUKr5qVRLqA9Q1k",
 								"type": "text"
 							}
 						],
@@ -262,7 +305,8 @@
 								"membership",
 								"bayar"
 							]
-						}
+						},
+						"description": "Berguna untuk membayar tagihan yang belum dibayar\n\nDibutuhkan\n- x-auth-token\n- wallet 100000"
 					},
 					"response": []
 				},
@@ -273,7 +317,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTUwMTgxM30.IV170BhCe8jEE5AVchAGBobfXOWIY_S2rOeRYWebNf0",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMjgwMTQyOH0.e0RcnjQ1LuSzo_3UUS4AZCQDG8S2OUKr5qVRLqA9Q1k",
 								"type": "text"
 							}
 						],
@@ -292,7 +336,8 @@
 								"membership",
 								"extend"
 							]
-						}
+						},
+						"description": "Berguna untuk memperpanjang masa membership akun user selama 1 bulan\n\nDibutuhkan \n- x-auth-token\n- Tagihan telah lunas"
 					},
 					"response": []
 				},
@@ -303,7 +348,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTUwMTgxM30.IV170BhCe8jEE5AVchAGBobfXOWIY_S2rOeRYWebNf0",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMjgwMTQyOH0.e0RcnjQ1LuSzo_3UUS4AZCQDG8S2OUKr5qVRLqA9Q1k",
 								"type": "text"
 							}
 						],
@@ -318,7 +363,8 @@
 								"membership",
 								"history"
 							]
-						}
+						},
+						"description": "Berguna untuk melihat history pembayaran pada akun user\n\nDibutuhkan \n- x-auth-token"
 					},
 					"response": []
 				},
@@ -329,7 +375,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTUwMTgxM30.IV170BhCe8jEE5AVchAGBobfXOWIY_S2rOeRYWebNf0",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMjgwMTQyOH0.e0RcnjQ1LuSzo_3UUS4AZCQDG8S2OUKr5qVRLqA9Q1k",
 								"type": "text"
 							}
 						],
@@ -355,7 +401,8 @@
 									"value": "ac milan"
 								}
 							]
-						}
+						},
+						"description": "Berguna untuk melihat pertandingan match antara 2 team, dengan mengisikan\n- nama_team_1\n- nama_team_2\n\nDibutuhkan \n- x-auth-token\n- akun yang telah subscribe"
 					},
 					"response": []
 				},
@@ -366,7 +413,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTUwMTgxM30.IV170BhCe8jEE5AVchAGBobfXOWIY_S2rOeRYWebNf0",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMjgwMTQyOH0.e0RcnjQ1LuSzo_3UUS4AZCQDG8S2OUKr5qVRLqA9Q1k",
 								"type": "text"
 							}
 						],
@@ -387,7 +434,8 @@
 									"value": "ac milan"
 								}
 							]
-						}
+						},
+						"description": "Berguna untuk Melihat history match dari suatu team, dengan mengisikan\n- nama_team\n\nDibutuhkan \n- x-auth-token\n- akun yang telah subscribe"
 					},
 					"response": []
 				}

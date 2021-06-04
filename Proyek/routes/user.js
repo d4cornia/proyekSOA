@@ -55,7 +55,6 @@ const upload = multer({
 const {
     cekJWT,
     authSubscriber,
-    authAdmin,
     cekMembershipExpired,
     cekTagihanBulanLalu,
 } = require("../middleware");
@@ -85,6 +84,7 @@ const genKodeAPI = (length) => {
 
 
 
+// endpoints user
 router.post('/register', upload.single("foto"), async (req,res)=> {
     // let isUpperLowerNumber = /^(?![A-Z]+$)(?![a-z]+$)(?![0-9]+$)(?![A-Z0-9]+$)(?![a-z0-9]+$)[0-9A-Za-z]+$/.test(req.body.test);
     // let tgl = req.body.tanggal_peminjaman.split("-");
@@ -139,6 +139,33 @@ router.post('/register', upload.single("foto"), async (req,res)=> {
             'error msg': 'File foto belum dimasukkan!'
         });
         console.log(error);
+    }
+});
+
+router.post('/apikey', async(req,res)=>{
+    if(req.body.username && req.body.password){
+        let resu = await db.query(`SELECT * FROM users WHERE username='${req.body.username}'`);
+        if(resu.length == 0){
+            return res.status(404).json({
+                'error msg': 'Username tidak ditemukan!'
+            });
+        }
+
+        resu = await db.query(`SELECT * FROM users WHERE username='${req.body.username}' AND password='${req.body.password}'`);
+        if(resu.length == 0){
+            return res.status(400).json({
+                'error msg': 'Username / Password salah!'
+            });
+        }
+
+        return res.status(200).json({
+            'Nama User': resu[0].nama,
+            'API Key': resu[0].api_key
+        });
+    }else{
+        return res.status(400).json({
+            'error msg': 'Inputan Belum lengkap!'
+        });
     }
 });
 
@@ -212,13 +239,19 @@ router.post('/membership', cekJWT, async (req,res)=>{
     let resu = await db.query(`SELECT * FROM members WHERE id_user='${req.user.id_user}'`);
     let d = new Date();
     let since = d.getDate() + "-" + (parseInt(d.getMonth()) + 1) + "-" + d.getFullYear();
+    let newenddate = '-';
     if(resu.length == 0){
         // end date daftar baru 1 bulan
-        let newenddate = d.getDate() + "-" + (parseInt(d.getMonth()) + 2) + "-" + d.getFullYear();
+        if(parseInt(d.getMonth()) + 2 > 12){
+            newenddate = d.getDate() + "-1-" + (parseInt(d.getFullYear()) + 1);
+        }else{
+            newenddate = d.getDate() + "-" + (parseInt(d.getMonth()) + 2) + "-" + d.getFullYear();
+        }
+
         // kalo belum terdaftar, insert
-        await db.query(`INSERT INTO members VALUES('','${req.user.id_user}', '-', '${newenddate}', '${since}', '-')`);
+        await db.query(`INSERT INTO members VALUES('', '${req.user.id_user}', '-', '${newenddate}', '${since}', '-')`);
         // Update tipe member
-        await db.query(`UPDATE users SET TYPE = 2 WHERE id_user='${req.user.id_user}'`);
+        await db.query(`UPDATE users SET type = 2 WHERE id_user='${req.user.id_user}'`);
 
         return res.status(200).json({
             'Nama User': req.user.nama,
@@ -233,23 +266,32 @@ router.post('/membership', cekJWT, async (req,res)=>{
             'error msg': 'Anda masih menjadi subscriber!'
         });
     }
-    // kalo sudah terdaftar update harus bayar baru bisa menjadi member
+
+    // kalo sudah terdaftar update
+    // harus bayar baru bisa menjadi member
     let sisa = (parseInt(req.user.wallet) - cost);
     if(sisa < 0){
         return res.status(400).json({
             'Nama User': req.user.nama,
-            'Tagihan': cost,
+            'Harga': cost,
             'Wallet': req.user.wallet,
             'Status': 'Wallet tidak mencukupi!'
         });
     }
-    let newenddate = (parseInt(d.getDate()))  + "-" + (parseInt(d.getMonth()) + 2) + "-" + d.getFullYear();
+
+    if(parseInt(d.getMonth()) + 2 > 12){
+        newenddate = d.getDate() + "-1-" + (parseInt(d.getFullYear()) + 1);
+    }else{
+        newenddate = d.getDate() + "-" + (parseInt(d.getMonth()) + 2) + "-" + d.getFullYear();
+    }
+
+    // update member
     await db.query(`UPDATE members SET last_payment = '${since}', end_date = '${newenddate}', member_since = '${since}', unsubscribe = '-' WHERE id_user='${req.user.id_user}'`);
     // Update tipe member
-    await db.query(`UPDATE users SET wallet = ${sisa}, TYPE = 2 WHERE id_user='${req.user.id_user}'`);
+    await db.query(`UPDATE users SET wallet = ${sisa}, type = 2 WHERE id_user='${req.user.id_user}'`);
     // insert ke history payment
     resu = await db.query(`SELECT * FROM members WHERE id_user = '${req.user.id_user}'`);
-    await db.query(`INSERT INTO payments VALUES('','${resu[0].id_member}', '${since}', ${cost}), 'Bayar Subcribe menjadi Membership Kembali'`);
+    await db.query(`INSERT INTO payments VALUES('', '${resu[0].id_member}', '${since}', ${cost}, 'Bayar Subcribe member menjadi Membership Kembali')`);
 
     return res.status(200).json({
         'Nama User': req.user.nama,
@@ -266,11 +308,16 @@ router.delete('/membership', [cekJWT, authSubscriber], async (req,res)=> {
     let tgl = resu[0].last_payment.split("-");
     let lastpayment = new Date(parseInt(tgl[2]), parseInt(tgl[1]) - 1, tgl[0]);
     tgl = resu[0].end_date.split("-");
-    let enddate = new Date(parseInt(tgl[2]), parseInt(tgl[1]) - 2, tgl[0]);
+    let enddate = '-';
+    if(parseInt(tgl[1]) - 2 < 0){
+        enddate = new Date(parseInt(tgl[2]), 12, tgl[0] - 1);
+    }else{
+        enddate = new Date(parseInt(tgl[2]), parseInt(tgl[1]) - 2, tgl[0]);
+    }
 
     if(lastpayment.getTime() < enddate.getTime()){
         // belum bayar
-        return res.status(400).json({
+        return res.status(402).json({
             'error msg': 'Harap bayar tagihan yang belum lunas untuk unsubscribe!'
         });
     }
@@ -278,7 +325,7 @@ router.delete('/membership', [cekJWT, authSubscriber], async (req,res)=> {
     let d = new Date();
     let now = d.getDate() + "-" + (parseInt(d.getMonth()) + 1) + "-" + d.getFullYear();
     await db.query(`UPDATE members SET unsubscribe = '${now}' WHERE id_user='${req.user.id_user}'`);
-    await db.query(`UPDATE users SET TYPE = 1 WHERE id_user='${req.user.id_user}'`);
+    await db.query(`UPDATE users SET type = 1 WHERE id_user='${req.user.id_user}'`);
     return res.status(200).json({
         'Nama User': req.user.nama,
         'Status': 'Sukses unsubscribe member',
@@ -299,7 +346,12 @@ router.get('/membership/tagihan', [cekJWT, authSubscriber], async (req, res)=>{
     let tgl = resu[0].last_payment.split("-");
     let lastpayment = new Date(parseInt(tgl[2]), parseInt(tgl[1]) - 1, tgl[0]);
     tgl = resu[0].end_date.split("-");
-    let enddate = new Date(parseInt(tgl[2]), parseInt(tgl[1]) - 2, tgl[0]);
+    let enddate = '-';
+    if(parseInt(tgl[1]) - 2 < 0){
+        enddate = new Date(parseInt(tgl[2]), 12, tgl[0] - 1);
+    }else{
+        enddate = new Date(parseInt(tgl[2]), parseInt(tgl[1]) - 2, tgl[0]);
+    }
 
     if(lastpayment.getTime() >= enddate.getTime()){
         // sudah bayar
@@ -311,13 +363,11 @@ router.get('/membership/tagihan', [cekJWT, authSubscriber], async (req, res)=>{
         });
     }
 
-    let tagihan = cost;
-
     return res.status(200).json({
         'Nama User': req.user.nama,
         'Pembayaran Terakhir': resu[0].last_payment,
         'End Date': resu[0].end_date,
-        'Tagihan Bulan ini': tagihan
+        'Tagihan Bulan ini': cost
     });
 });
 
@@ -328,7 +378,13 @@ router.post('/membership/bayar', [cekJWT, authSubscriber], async (req, res)=> {
     let tgl = resu[0].last_payment.split("-");
     let lastpayment = new Date(parseInt(tgl[2]), parseInt(tgl[1]) - 1, tgl[0]);
     tgl = resu[0].end_date.split("-");
-    let enddate = new Date(parseInt(tgl[2]), parseInt(tgl[1]) - 2, tgl[0]);
+    let enddate = '-';
+    if(parseInt(tgl[1]) - 2 < 0){
+        enddate = new Date(parseInt(tgl[2]), 12, tgl[0] - 1);
+    }else{
+        enddate = new Date(parseInt(tgl[2]), parseInt(tgl[1]) - 2, tgl[0]);
+    }
+
     if(lastpayment.getTime() >= enddate.getTime()){
         // sudah bayar
         return res.status(200).json({
@@ -359,7 +415,7 @@ router.post('/membership/bayar', [cekJWT, authSubscriber], async (req, res)=> {
 
     // insert ke history payment
     resu = await db.query(`SELECT * FROM members WHERE id_user = '${req.user.id_user}'`);
-    await db.query(`INSERT INTO payments VALUES('','${resu[0].id_member}', '${now}', ${cost}, 'Bayar Tagihan Bulanan')`);
+    await db.query(`INSERT INTO payments VALUES('', '${resu[0].id_member}', '${now}', ${cost}, 'Bayar Tagihan Bulanan')`);
 
     return res.status(200).json({
         'Nama User': req.user.nama,
@@ -373,7 +429,13 @@ router.post('/membership/extend', [cekJWT, authSubscriber, cekTagihanBulanLalu],
     // extend end date
     let d = new Date();
     // new end date = 1 bulan dari hari dia extend
-    let newenddate = (parseInt(d.getDate()))  + "-" + (parseInt(d.getMonth()) + 2) + "-" + d.getFullYear();
+    let newenddate = '-';
+    if(parseInt(d.getMonth()) + 2 > 12){
+        newenddate = d.getDate() + "-1-" + (parseInt(d.getFullYear()) + 1);
+    }else{
+        newenddate = d.getDate() + "-" + (parseInt(d.getMonth()) + 2) + "-" + d.getFullYear();
+    }
+
     await db.query(`UPDATE members SET end_date = '${newenddate}' WHERE id_user='${req.user.id_user}'`);
     return res.status(200).json({
         'Nama User': req.user.nama,
@@ -427,6 +489,9 @@ router.get("/matches/:nama_team_1/:nama_team_2", [cekJWT, authSubscriber, cekMem
     axios.request(options).then(function (response) {
         res.status(200).json(response.data);
     }).catch(function (error) {
+        res.status(500).json({
+            'err Msg': 'Internal Error'
+        });
         console.error(error);
     });
 });
@@ -452,6 +517,9 @@ router.get("/history/:nama_team", [cekJWT, authSubscriber, cekMembershipExpired]
     axios.request(options).then(function (response) {
         res.status(200).json(response.data);
     }).catch(function (error) {
+        res.status(500).json({
+            'err Msg': 'Internal Error'
+        });
         console.error(error);
     });
 });

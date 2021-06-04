@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 04, 2021 at 07:09 AM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 7.4.13
+-- Generation Time: Jun 04, 2021 at 12:17 PM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `proyeksoa`
 --
+CREATE DATABASE IF NOT EXISTS `proyeksoa` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `proyeksoa`;
 
 -- --------------------------------------------------------
 
@@ -27,6 +29,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `favorite`
 --
 
+DROP TABLE IF EXISTS `favorite`;
 CREATE TABLE `favorite` (
   `id_fav` int(11) NOT NULL,
   `id_team` int(11) NOT NULL,
@@ -39,6 +42,7 @@ CREATE TABLE `favorite` (
 -- Table structure for table `members`
 --
 
+DROP TABLE IF EXISTS `members`;
 CREATE TABLE `members` (
   `id_member` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
@@ -53,8 +57,7 @@ CREATE TABLE `members` (
 --
 
 INSERT INTO `members` (`id_member`, `id_user`, `last_payment`, `end_date`, `member_since`, `unsubscribe`) VALUES
-(4, 2, '19-5-2021', '19-6-2021', '19-5-2021', '-'),
-(5, 5, '3-6-2021', '3-7-2021', '3-6-2021', '-');
+(6, 6, '4-6-2021', '4-7-2021', '4-6-2021', '-');
 
 -- --------------------------------------------------------
 
@@ -62,6 +65,7 @@ INSERT INTO `members` (`id_member`, `id_user`, `last_payment`, `end_date`, `memb
 -- Table structure for table `payments`
 --
 
+DROP TABLE IF EXISTS `payments`;
 CREATE TABLE `payments` (
   `id_payment` int(11) NOT NULL,
   `id_member` int(11) NOT NULL,
@@ -75,8 +79,8 @@ CREATE TABLE `payments` (
 --
 
 INSERT INTO `payments` (`id_payment`, `id_member`, `tanggal_payment`, `value`, `keterangan`) VALUES
-(2, 4, '19-5-2021', 100000, 'Bayar tagihan'),
-(3, 4, '19-5-2021', 100000, 'Subscribe sebagai member lagi');
+(4, 6, '4-6-2021', 100000, 'Bayar Tagihan Bulanan'),
+(5, 6, '4-6-2021', 100000, 'Bayar Subcribe member menjadi Membership Kembali');
 
 -- --------------------------------------------------------
 
@@ -84,6 +88,7 @@ INSERT INTO `payments` (`id_payment`, `id_member`, `tanggal_payment`, `value`, `
 -- Table structure for table `stadium`
 --
 
+DROP TABLE IF EXISTS `stadium`;
 CREATE TABLE `stadium` (
   `id_stadium` varchar(250) NOT NULL,
   `nama` varchar(250) NOT NULL,
@@ -203,6 +208,7 @@ INSERT INTO `stadium` (`id_stadium`, `nama`, `city`, `country`, `kapasitas`, `st
 -- Table structure for table `team`
 --
 
+DROP TABLE IF EXISTS `team`;
 CREATE TABLE `team` (
   `id_team` int(11) NOT NULL,
   `nama` varchar(255) NOT NULL,
@@ -216,6 +222,7 @@ CREATE TABLE `team` (
 -- Table structure for table `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id_user` int(11) NOT NULL,
   `no_telp` varchar(20) NOT NULL,
@@ -234,10 +241,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `no_telp`, `username`, `nama`, `email`, `type`, `password`, `wallet`, `foto`, `api_key`) VALUES
-(2, '081350991278', 'hope', 'david', 'd4cornia@gmail.com', 2, '123', 100000, '', ''),
-(3, '081350991277', 'bare', 'ansel', 'ansel@gmail.com', 1, '123', 0, './public/uploads/bare.jpg', 'aYxm0s4MW8K241B0m7I8'),
-(4, '', 'admin', 'admin', '', 0, 'admin', 0, '', 'aYxm0s4MW8K241B0m7I5'),
-(5, '081350991277', 'bare3', 'ansel', 'ansel3@gmail.com', 2, '123', 0, './public/uploads/bare3.png', 'zF183q9w93BhH27e09lt');
+(6, '081350991277', 'bare', 'ansel', 'ansel@gmail.com', 2, '123', 0, './public/uploads/bare.jpg', '4p7La53Rm5jE3jIq3nBq');
 
 --
 -- Indexes for dumped tables
@@ -293,13 +297,13 @@ ALTER TABLE `favorite`
 -- AUTO_INCREMENT for table `members`
 --
 ALTER TABLE `members`
-  MODIFY `id_member` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_member` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id_payment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_payment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `team`
@@ -311,7 +315,7 @@ ALTER TABLE `team`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
