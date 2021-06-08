@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 04, 2021 at 12:17 PM
+-- Generation Time: Jun 08, 2021 at 05:56 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -32,9 +32,18 @@ USE `proyeksoa`;
 DROP TABLE IF EXISTS `favorite`;
 CREATE TABLE `favorite` (
   `id_fav` int(11) NOT NULL,
-  `id_team` int(11) NOT NULL,
-  `keterangan` varchar(255) NOT NULL
+  `username_user` varchar(100) NOT NULL,
+  `id_team` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `favorite`
+--
+
+INSERT INTO `favorite` (`id_fav`, `username_user`, `id_team`, `status`) VALUES
+(1, 'hope', '5fda5faf06aa325e', 1),
+(3, 'hope', '5fda5faf0c077d86', 0);
 
 -- --------------------------------------------------------
 
@@ -210,11 +219,118 @@ INSERT INTO `stadium` (`id_stadium`, `nama`, `city`, `country`, `kapasitas`, `st
 
 DROP TABLE IF EXISTS `team`;
 CREATE TABLE `team` (
-  `id_team` int(11) NOT NULL,
+  `id_team` varchar(255) NOT NULL,
   `nama` varchar(255) NOT NULL,
-  `tanggal_berdiri` varchar(25) NOT NULL,
-  `logo` varchar(255) NOT NULL
+  `country` varchar(100) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `team`
+--
+
+INSERT INTO `team` (`id_team`, `nama`, `country`, `status`) VALUES
+('5fda5faf06aa325e', 'ES Paulhan Pezenas', 'FR', 0),
+('5fda5faf088f5c1d', 'Ashburton Women', 'null', 0),
+('5fda5faf095f63a2', 'Casa de Portugal', 'MO', 0),
+('5fda5faf0a0beefd', 'Cigand SE', 'HU', 0),
+('5fda5faf0a85b878', 'Malta Women U19', 'MT', 0),
+('5fda5faf0b0134d5', 'Mar Menor', 'ES', 0),
+('5fda5faf0c077d86', 'Lancing', 'GB', 0),
+('5fda5faf0d252f9b', 'Deportivo Masaya', 'NI', 0),
+('5fda5faf0e0e9765', 'Sporting Recco', 'IT', 0),
+('5fda5faf0f641017', 'FK Borac', 'RS', 0),
+('5fda5faf10423f22', 'Støvring', 'null', 0),
+('5fda5faf10bc0aa5', 'Thammasat University', 'TH', 0),
+('5fda5faf11aa8065', 'AS Salmamy', 'null', 0),
+('5fda5faf127b3666', 'Rosh Haayin Beach', 'null', 0),
+('5fda5faf13642102', 'UP Fighting Maroons', 'PH', 0),
+('5fda5faf141e5f33', 'TSV Buchholz 08', 'DE', 0),
+('5fda5faf1569d4b8', 'Holy Cross SC', 'IN', 0),
+('5fda5faf16ec2c46', 'Ecuador Beach', 'EC', 0),
+('5fda5faf180c9092', 'Viking FK U19', 'NO', 0),
+('5fda5faf1937a52e', 'Linköpings Women', 'SE', 0),
+('5fda5faf1a5a23e7', 'Djibouti U20', 'null', 0),
+('5fda5faf1ba465c5', 'FC Germania 09 e.V. Niederrodenbach', 'null', 0),
+('5fda5faf1d1f04cd', 'Fortuna Dusseldorf U19', 'DE', 0),
+('5fda5faf1df9ab5f', 'Olimp Khotkovo', 'RU', 0),
+('5fda5faf1e87f4ef', 'DJK Appeldorn', 'null', 0),
+('5fda5faf1f8e4825', 'Maccabi Haifa U19', 'IL', 0),
+('5fda5faf20b40e01', 'Super Power Samut Prakan U19', 'null', 0),
+('5fda5faf218d6ff4', 'Waterford United U19', 'IE', 0),
+('5fda5faf228fbe63', 'Maoming Oil FC', 'CN', 0),
+('5fda5faf23762585', 'FC Trollhattan', 'SE', 0),
+('5fda5faf24d108b7', 'Pelopas Kiatou', 'GR', 0),
+('5fda5faf2604765e', 'KF Vllaznia Pozheran', 'null', 0),
+('5fda5faf26aa8638', 'Malatya Yesilyurt Belediyespor', 'TR', 0),
+('5fda5faf27174111', 'Societe Omnisports De L\'Armee', 'CI', 0),
+('5fda5faf286ca5a2', 'Norway U17', 'NO', 0),
+('5fda5faf290f3286', 'Igdir Es Spor', 'TR', 0),
+('5fda5faf29c651ee', 'Kamphaeng Phet U19', 'null', 0),
+('5fda5faf2a9f5452', 'Pacos Ferreira U19', 'PT', 0),
+('5fda5faf2b728559', 'Al Raed', 'SA', 0),
+('5fda5faf2c2bae88', 'Itapirense U20', 'BR', 0),
+('5fda5faf2d523c9c', 'SU Tillmitsch', 'AT', 0),
+('5fda5faf2df443f5', 'Knox City', 'AU', 0),
+('5fda5faf2e90d591', 'FC India MFC', 'null', 0),
+('5fda5faf2fdd43c9', 'Nika Ivano-Frankivsk U19', 'UA', 0),
+('5fda5faf31305b8b', 'Midland Odessa Sockers', 'US', 0),
+('5fda5faf323ed1fd', 'FC Minsk Reserves', 'BY', 0),
+('5fda5faf32caaa81', 'RB Brasil U19', 'null', 0),
+('5fda5faf33d50899', 'Norway Women U23', 'NO', 0),
+('5fda5faf34f0f2c3', 'FC Bytkiv', 'UA', 0),
+('5fda5faf3624bd69', 'NBP Rainbow', 'null', 0),
+('5fda5faf36c643f9', 'Napredak Medosevac', 'RS', 0),
+('5fda5faf384c2875', 'Colombia U17 Women', 'CO', 0),
+('5fda5faf39ab5d42', 'Eibar', 'ES', 0),
+('5fda5faf3aff5196', 'Al Dhaid U19', 'AE', 0),
+('5fda5faf3bc7d742', 'Quartz FC', 'null', 0),
+('5fda5faf3cddf251', 'CA Argentino de San Carlos', 'AR', 0),
+('5fda5faf3df3b069', 'Urena FC', 'VE', 0),
+('5fda5faf3f0d84a9', 'JK Viljandi', 'null', 0),
+('5fda5faf40244193', 'KFC Duffel', 'BE', 0),
+('5fda5faf4118ddac', 'Bustillos Women', 'BO', 0),
+('5fda5faf41908182', 'KS Cyklon Rogoznik', 'null', 0),
+('5fda5faf425390ef', 'Whitley Bay', 'GB', 0),
+('5fda5faf4315e835', 'Servette FC Chenois Women', 'CH', 0),
+('5fda5faf441815c9', 'Barcelona EC Women', 'null', 0),
+('5fda5faf44a934d6', 'Stourport Swifts', 'GB', 0),
+('5fda5faf45f97635', 'Pakhtakor-79', 'UZ', 0),
+('5fda5faf46c00acd', 'Verdal U19', 'NO', 0),
+('5fda5faf4800fe0a', 'Saint Louisienne', 'null', 0),
+('5fda5faf48d91f78', 'Shikoku Gakuin University', 'null', 0),
+('5fda5faf4a5b492d', 'AC Oulu U20', 'FI', 0),
+('5fda5faf4b0bf3d0', 'FC Aral Nukus', 'null', 0),
+('5fda5faf4bc474be', 'The Gap BPL Women', 'AU', 0),
+('5fda5faf4cb804fe', 'AS Lattes', 'FR', 0),
+('5fda5faf4da1c420', 'Al-Jehad', 'SY', 0),
+('5fda5faf4e6bcec7', 'Iraq U20', 'IQ', 0),
+('5fda5faf4f98feba', 'CFS Cartel Beach', 'null', 0),
+('5fda5faf503791de', 'Aetos Koridallou', 'GR', 0),
+('5fda5faf50d83e89', 'Sgs Essen-Schonebeck 19/68', 'null', 0),
+('5fda5faf516191b2', 'Vrango IF', 'null', 0),
+('5fda5faf52bcb53b', 'Graffin Vlasim', 'CZ', 0),
+('5fda5faf53fc422b', 'CA Tigre Reserves', 'AR', 0),
+('5fda5faf5511c3e6', 'CS Flacara Parta', 'null', 0),
+('5fda5faf560312d9', 'Canelas 2010', 'null', 0),
+('5fda5faf569b8704', 'Al Wihdat', 'JO', 0),
+('5fda5faf57b60236', 'FC Ingolstadt', 'DE', 0),
+('5fda5faf592503ec', 'Grenoble Foot 38 Women U19', 'null', 0),
+('5fda5faf5a186f1b', 'Cartagines U20', 'null', 0),
+('5fda5faf5b3dbc04', 'Esteghlal Molasani', 'IR', 0),
+('5fda5faf5c830c96', 'Balga SC', 'AU', 0),
+('5fda5faf5d340994', 'Greystones', 'IE', 0),
+('5fda5faf5e7bf293', 'Russia U19', 'RU', 0),
+('5fda5faf5f4fb564', '52 Orduspor FK', 'TR', 0),
+('5fda5faf60368684', 'America FC TO U20', 'null', 0),
+('5fda5faf613f1da3', 'BSG Stahl Riesa', 'null', 0),
+('5fda5faf6216fe2d', 'Åsane Fotball Women', 'null', 0),
+('5fda5faf63540c7b', 'Parnahyba U20', 'BR', 0),
+('5fda5faf646b9a3a', 'Monmouth Town', 'GB', 0),
+('5fda5faf65404fc3', 'Liverpool Montevideo', 'UY', 0),
+('5fda5faf662cb3fb', 'FK Gorodeya', 'BY', 0),
+('5fda5faf675d1a7a', 'NUI Maynooth', 'null', 0),
+('Q0bAuLTe7Lcpmh19', 'manchester', 'EN', 1);
 
 -- --------------------------------------------------------
 
@@ -291,7 +407,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `favorite`
 --
 ALTER TABLE `favorite`
-  MODIFY `id_fav` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_fav` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `members`
@@ -304,12 +420,6 @@ ALTER TABLE `members`
 --
 ALTER TABLE `payments`
   MODIFY `id_payment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `team`
---
-ALTER TABLE `team`
-  MODIFY `id_team` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`

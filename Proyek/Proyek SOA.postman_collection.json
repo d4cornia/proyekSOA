@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "2aabeead-e462-44a6-9a8b-256ee3571d69",
-		"name": "Proyek SOA",
+		"_postman_id": "80c4ff23-49c2-4bc3-b1b4-86d8c89013dc",
+		"name": "Proyek SOA Copy",
 		"description": "Dokumentasi Proyek SOA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -438,6 +438,135 @@
 						"description": "Berguna untuk Melihat history match dari suatu team, dengan mengisikan\n- nama_team\n\nDibutuhkan \n- x-auth-token\n- akun yang telah subscribe"
 					},
 					"response": []
+				},
+				{
+					"name": "View All Team",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users/team/viewAll",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"team",
+								"viewAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Team",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/users/team/detail?query=man",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"team",
+								"detail"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "man"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Favorite Team",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_team",
+									"value": "5fda5faf0c077d86",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/favorite/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"favorite",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Favorit",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users/favorite/remove/5fda5faf0c077d86",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"favorite",
+								"remove",
+								"5fda5faf0c077d86"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Manager Team",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users/viewManager/5fb962e4cf4aaa11",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"viewManager",
+								"5fb962e4cf4aaa11"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -539,6 +668,119 @@
 									"value": "david2",
 									"disabled": true
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Team",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "Add Team",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nama",
+									"value": "chelsea",
+									"type": "text"
+								},
+								{
+									"key": "country",
+									"value": "EN",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/team/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"team",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Team",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nama",
+									"value": "milan",
+									"type": "text"
+								},
+								{
+									"key": "country",
+									"value": "EU",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/team/update/faaW2UFsdd8y9geo",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"team",
+								"update",
+								"faaW2UFsdd8y9geo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Team",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/team/update/5fda5faf0a85b878",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"team",
+								"update",
+								"5fda5faf0a85b878"
 							]
 						}
 					},

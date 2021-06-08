@@ -524,4 +524,167 @@ router.get("/history/:nama_team", [cekJWT, authSubscriber, cekMembershipExpired]
     });
 });
 
+
+
+router.get("/team/viewAll", [cekJWT], async(req, res) => {
+    // let id = req.params.id;
+    let query = `Select * from team`;
+    var result = await db.query(query);
+
+    var arrTeam = [];
+
+    if(result.length==0){
+        res.status(404).send({error:"Team Tidak Tersedia"});
+    }else{
+
+        for (let i = 0; i < result.length; i++) {
+
+            arrTeam.push(
+                nama=result[i].nama
+            )
+
+        }
+
+
+        res.status(200).send(arrTeam);
+    }
+});
+
+router.get("/team/detail", [cekJWT], async(req, res) => {
+    let src = req.query.query;
+
+    if(src){
+        let query = `Select * from team where nama like "%${src}%"`;
+        var result = await db.query(query);
+
+        var arrTeam = [];
+
+        if(result.length==0){
+            res.status(404).send({error:"Team Tidak Tersedia"});
+        }else{
+
+            res.status(200).send(result);
+        }
+    }else{
+        let query = `Select * from team`;
+        var result = await db.query(query);
+
+        var arrTeam = [];
+
+        if(result.length==0){
+            res.status(404).send({error:"Team Tidak Tersedia"});
+        }else{
+
+            // for (let i = 0; i < result.length; i++) {
+
+            //     arrTeam.push(
+            //         nama=result[i].nama
+            //     )
+
+            // }
+
+
+            res.status(200).send(result);
+        }
+    }
+
+});
+
+router.post("/favorite/add", [cekJWT, authSubscriber], async(req, res) => {
+    let token = req.headers['x-auth-token'];
+    try{
+        user = jwt.verify(token, process.env.secret); // verify token yang dibuat pas login
+        // diverify dari file .env dengan nama variable secret
+
+    }catch(e){
+        console.log(e);
+    }
+    let id_team = req.body.id_team;
+
+    let query = `Select * from team where id_team = "${id_team}"`;
+    var result = await db.query(query);
+
+    if(result.length==0){
+        // nama tim sudah terpakai
+        res.status(500).send({error:"Team tidak tersedia"});
+    }else{
+        query = `Select * from favorite where id_team = "${id_team}" and username_user = "${user.username}" and status=1`;
+        let fav = await db.query(query);
+        console.log(user.username);
+        if(fav.length==0){
+
+            await db.query(`INSERT INTO favorite VALUES("","${user.username}","${id_team}",1)`);
+            res.status(201).send({
+                status : "Success Add "+result[0].nama+" as Favorite Teams"
+            });
+        }else{
+
+            res.status(500).send({
+                error : "Team Sudah terdaftar di List Tim Favorit"
+            });
+
+        }
+
+
+    }
+});
+
+router.put("/favorite/remove/:id", [cekJWT, authSubscriber], async(req, res) => {
+    let token = req.headers['x-auth-token'];
+    try{
+        user = jwt.verify(token, process.env.secret); // verify token yang dibuat pas login
+        // diverify dari file .env dengan nama variable secret
+        console.log(user.username);
+    }catch(e){
+        console.log(e);
+    }
+    let id_team = req.params.id;
+
+    let query = `Select * from team where id_team = "${id_team}"`;
+    var result = await db.query(query);
+
+    if(result.length==0){
+        // nama tim sudah terpakai
+        res.status(500).send({error:"Team tidak tersedia"});
+    }else{
+        query = `Select * from favorite where id_team = "${id_team}" and username_user = "${user.username}" and status=0`;
+        let fav = await db.query(query);
+        if(fav.length==0){
+
+            await db.query(`UPDATE favorite set status = 0 where id_team="${id_team}"`);
+            res.status(201).send({
+                status : "Success Remove "+result[0].nama+" from Favorite Teams"
+            });
+        }else{
+
+            res.status(500).send({
+                error : "Team Sudah tidak terdaftar di List Tim Favorit"
+            });
+
+        }
+
+
+    }
+});
+
+router.get("/viewManager/:idTeam", [cekJWT], async(req, res) => {
+    var axios = require("axios").default;
+
+    var options = {
+        method: 'GET',
+        url: 'https://soccer-football-info.p.rapidapi.com/managers/view/',
+        params: {i: req.params.idTeam, l: 'en_US'},
+        headers: {
+            'x-rapidapi-key': '8e4f543e6fmsh137a9d0400df44ap1c3d59jsn090091500313',
+            'x-rapidapi-host': 'soccer-football-info.p.rapidapi.com'
+        }
+    };
+
+    axios.request(options).then(function (response) {
+        res.status(200).send(response.data["result"]);
+    }).catch(function (error) {
+        console.error(error);
+    });
+});
+
 module.exports = router;
