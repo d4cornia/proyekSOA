@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "80c4ff23-49c2-4bc3-b1b4-86d8c89013dc",
-		"name": "Proyek SOA Copy",
+		"_postman_id": "b66b9794-e865-4b8f-a23b-a3548b33e237",
+		"name": "Proyek SOA",
 		"description": "Dokumentasi Proyek SOA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,6 +11,25 @@
 			"item": [
 				{
 					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code 201', function(){\r",
+									"    // ngambil response\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test('Hasil berupa array', function(){\r",
+									"    const data = pm.response.json();\r",
+									"    pm.expect(data).to.be.an.instanceOf(Array);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -71,6 +90,25 @@
 				},
 				{
 					"name": "Api key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code 200', function(){\r",
+									"    // ngambil response\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Hasil berupa array', function(){\r",
+									"    const data = pm.response.json();\r",
+									"    pm.expect(data).to.be.an.instanceOf(Array);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -106,6 +144,30 @@
 				},
 				{
 					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code 200', function(){\r",
+									"    // ngambil response\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Hasil berupa array', function(){\r",
+									"    const data = pm.response.json();\r",
+									"    pm.expect(data).to.be.an.instanceOf(Array);\r",
+									"});\r",
+									"\r",
+									"pm.test('Status Berhasil', function () {\r",
+									"    const data = pm.response.json();\r",
+									"    pm.expect(data.status).to.equal(\"Login Berhasil!\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -136,6 +198,25 @@
 				},
 				{
 					"name": "Lihat wallet",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code 200', function(){\r",
+									"    // ngambil response\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Wallet tidak minus', function(){\r",
+									"    const data = pm.response.json();\r",
+									"    pm.expect(data.wallet).to.gte(0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -162,6 +243,25 @@
 				},
 				{
 					"name": "Topup wallet",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code 200', function(){\r",
+									"    // ngambil response\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Hasil berupa array', function(){\r",
+									"    const data = pm.response.json();\r",
+									"    pm.expect(data).to.be.an.instanceOf(Array);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -198,6 +298,25 @@
 				},
 				{
 					"name": "Subscribe Membership",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code 200', function(){\r",
+									"    // ngambil response\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Hasil berupa array', function(){\r",
+									"    const data = pm.response.json();\r",
+									"    pm.expect(data).to.be.an.instanceOf(Array);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -228,6 +347,25 @@
 				},
 				{
 					"name": "Unsubscribe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code 200', function(){\r",
+									"    // ngambil response\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Hasil berupa array', function(){\r",
+									"    const data = pm.response.json();\r",
+									"    pm.expect(data).to.be.an.instanceOf(Array);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [
@@ -254,6 +392,25 @@
 				},
 				{
 					"name": "Tagihan bulan ini",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code 200', function(){\r",
+									"    // ngambil response\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Hasil berupa array', function(){\r",
+									"    const data = pm.response.json();\r",
+									"    pm.expect(data).to.be.an.instanceOf(Array);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -281,6 +438,25 @@
 				},
 				{
 					"name": "Bayar Tagihan",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code 200', function(){\r",
+									"    // ngambil response\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Hasil berupa array', function(){\r",
+									"    const data = pm.response.json();\r",
+									"    pm.expect(data).to.be.an.instanceOf(Array);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -312,6 +488,25 @@
 				},
 				{
 					"name": "Extend Membeship",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code 200', function(){\r",
+									"    // ngambil response\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Hasil berupa array', function(){\r",
+									"    const data = pm.response.json();\r",
+									"    pm.expect(data).to.be.an.instanceOf(Array);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -343,6 +538,20 @@
 				},
 				{
 					"name": "Lihat History Pembayaran Tagihan",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code 200', function(){\r",
+									"    // ngambil response\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -370,6 +579,20 @@
 				},
 				{
 					"name": "View Pertandingan",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code 200', function(){\r",
+									"    // ngambil response\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -408,6 +631,20 @@
 				},
 				{
 					"name": "View History Tim",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code 200', function(){\r",
+									"    // ngambil response\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -678,7 +915,9 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
