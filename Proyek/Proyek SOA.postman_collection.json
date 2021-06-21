@@ -21,9 +21,10 @@
 									"    pm.response.to.have.status(201);\r",
 									"});\r",
 									"\r",
-									"pm.test('Hasil berupa array', function(){\r",
+									"pm.test('Response JSON Object', function(){\r",
+									"    // ngambil response\r",
 									"    const data = pm.response.json();\r",
-									"    pm.expect(data).to.be.an.instanceOf(Array);\r",
+									"    pm.expect(data).to.be.an(\"object\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -100,10 +101,12 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"pm.test('Hasil berupa array', function(){\r",
+									"pm.test('Response JSON Object', function(){\r",
+									"    // ngambil response\r",
 									"    const data = pm.response.json();\r",
-									"    pm.expect(data).to.be.an.instanceOf(Array);\r",
-									"});"
+									"    pm.expect(data).to.be.an(\"object\");\r",
+									"});\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -140,7 +143,76 @@
 						},
 						"description": "berguna untuk mendapatkan apikey, dengan mengisikan\n- username\n- password"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Api key",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "bare",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "123",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/users/apikey",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"apikey"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "54"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"36-DX7UJ4VjZdl9Ijj6njs2BPiKV9g\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 21 Jun 2021 10:00:08 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Nama User\": \"ansel\",\n    \"API Key\": \"4p7La53Rm5jE3jIq3nBq\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Login",
@@ -154,14 +226,15 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"pm.test('Hasil berupa array', function(){\r",
+									"pm.test('Response JSON Object', function(){\r",
+									"    // ngambil response\r",
 									"    const data = pm.response.json();\r",
-									"    pm.expect(data).to.be.an.instanceOf(Array);\r",
+									"    pm.expect(data).to.be.an(\"object\");\r",
 									"});\r",
 									"\r",
 									"pm.test('Status Berhasil', function () {\r",
 									"    const data = pm.response.json();\r",
-									"    pm.expect(data.status).to.equal(\"Login Berhasil!\");\r",
+									"    pm.expect(data.Status).to.equal(\"Login Berhasil!\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -194,7 +267,71 @@
 						},
 						"description": "Login user dilakukan untuk mendapatkan x-auth-token, dengan mengisikan\n- api_key -> didapat dari awal register atau dari endpoint /apikey"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "api_key",
+											"value": "4p7La53Rm5jE3jIq3nBq",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/users/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "211"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"d3-8D0K5Q5vMCBW1kQQ2dRm7L+2jko\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 21 Jun 2021 10:00:15 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Nama User\": \"ansel\",\n    \"Status\": \"Login Berhasil!\",\n    \"Token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyNDI2OTYxNX0.NV4dEwwn70KkCC0_ia5FFxuaBIzHTEGhtZU8Akd5w_k\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Lihat wallet",
@@ -208,9 +345,20 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
+									"pm.test('Response JSON Object', function(){\r",
+									"    // ngambil response\r",
+									"    const data = pm.response.json();\r",
+									"    pm.expect(data).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
 									"pm.test('Wallet tidak minus', function(){\r",
 									"    const data = pm.response.json();\r",
-									"    pm.expect(data.wallet).to.gte(0);\r",
+									"    pm.expect(data.Wallet).to.gte(0);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"x-auth-token ada\", () => {\r",
+									"  pm.request.to.have.header(\"x-auth-token\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -239,7 +387,67 @@
 						},
 						"description": "Berguna untuk melihat sisa wallet yang dimiliki user\n\nDibutuhkan \n- x-auth-token"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Lihat wallet",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMjgwMTQyOH0.e0RcnjQ1LuSzo_3UUS4AZCQDG8S2OUKr5qVRLqA9Q1k",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/users/wallet",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"wallet"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "37"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"25-jMCuRN0rJeMMdS/YqsaF8mplAb4\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 21 Jun 2021 10:00:37 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Nama User\": \"ansel\",\n    \"Wallet\": 300000\n}"
+						}
+					]
 				},
 				{
 					"name": "Topup wallet",
@@ -253,9 +461,14 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"pm.test('Hasil berupa array', function(){\r",
+									"pm.test('Response JSON Object', function(){\r",
+									"    // ngambil response\r",
 									"    const data = pm.response.json();\r",
-									"    pm.expect(data).to.be.an.instanceOf(Array);\r",
+									"    pm.expect(data).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"x-auth-token ada\", () => {\r",
+									"  pm.request.to.have.header(\"x-auth-token\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -294,7 +507,77 @@
 						},
 						"description": "Berguna untuk mengtop up wallet user, dengan mengisikan\n- value : nominal yang ingin ditopup kedalam akun user\n\nDibutuhkan \n- x-auth-token"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Topup wallet",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMjgwMTQyOH0.e0RcnjQ1LuSzo_3UUS4AZCQDG8S2OUKr5qVRLqA9Q1k",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "value",
+											"value": "100000",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/users/topup",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"topup"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "79"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4f-TW3oAj4x6+8+pi1lxRCoJ9uEg8w\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 21 Jun 2021 10:06:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Nama User\": \"ansel\",\n    \"Wallet\": 400000,\n    \"Status\": \"Topup sebesar 100000 Berhasil!\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Subscribe Membership",
@@ -308,9 +591,14 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"pm.test('Hasil berupa array', function(){\r",
+									"pm.test('Response JSON Object', function(){\r",
+									"    // ngambil response\r",
 									"    const data = pm.response.json();\r",
-									"    pm.expect(data).to.be.an.instanceOf(Array);\r",
+									"    pm.expect(data).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"x-auth-token ada\", () => {\r",
+									"  pm.request.to.have.header(\"x-auth-token\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -357,9 +645,14 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"pm.test('Hasil berupa array', function(){\r",
+									"\r",
+									"pm.test('Response JSON Object', function(){\r",
+									"    // ngambil response\r",
 									"    const data = pm.response.json();\r",
-									"    pm.expect(data).to.be.an.instanceOf(Array);\r",
+									"    pm.expect(data).to.be.an(\"object\");\r",
+									"});\r",
+									"pm.test(\"x-auth-token ada\", () => {\r",
+									"  pm.request.to.have.header(\"x-auth-token\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -402,9 +695,14 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"pm.test('Hasil berupa array', function(){\r",
+									"pm.test('Response JSON Object', function(){\r",
+									"    // ngambil response\r",
 									"    const data = pm.response.json();\r",
-									"    pm.expect(data).to.be.an.instanceOf(Array);\r",
+									"    pm.expect(data).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"x-auth-token ada\", () => {\r",
+									"  pm.request.to.have.header(\"x-auth-token\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -434,7 +732,68 @@
 						},
 						"description": "Berguna untuk melihat tagihan yang belum dibayar\n\nDibutuhkan \n- x-auth-token"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Tagihan bulan ini",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTUwMTgxM30.IV170BhCe8jEE5AVchAGBobfXOWIY_S2rOeRYWebNf0",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/users/membership/tagihan",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"membership",
+										"tagihan"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "104"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"68-67GYJkLrJjD3pH4LWizb/dlUdkc\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 21 Jun 2021 10:06:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Nama User\": \"ansel\",\n    \"Pembayaran Terakhir\": \"4-6-2021\",\n    \"End Date\": \"4-7-2021\",\n    \"Tagihan Bulan ini\": \"Lunas\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Bayar Tagihan",
@@ -448,9 +807,14 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"pm.test('Hasil berupa array', function(){\r",
+									"pm.test('Response JSON Object', function(){\r",
+									"    // ngambil response\r",
 									"    const data = pm.response.json();\r",
-									"    pm.expect(data).to.be.an.instanceOf(Array);\r",
+									"    pm.expect(data).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"x-auth-token ada\", () => {\r",
+									"  pm.request.to.have.header(\"x-auth-token\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -484,7 +848,72 @@
 						},
 						"description": "Berguna untuk membayar tagihan yang belum dibayar\n\nDibutuhkan\n- x-auth-token\n- wallet 100000"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Bayar Tagihan",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMjgwMTQyOH0.e0RcnjQ1LuSzo_3UUS4AZCQDG8S2OUKr5qVRLqA9Q1k",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{base_url}}/api/users/membership/bayar",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"membership",
+										"bayar"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "110"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"6e-cfyPKeHTJE3RrvLSKmuIUYIPMQc\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 21 Jun 2021 10:06:35 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Nama User\": \"ansel\",\n    \"Pembayaran Terakhir\": \"4-6-2021\",\n    \"End Date\": \"4-7-2021\",\n    \"Tagihan Bulan ini\": \"Telah Lunas\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Extend Membeship",
@@ -498,9 +927,14 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"pm.test('Hasil berupa array', function(){\r",
+									"pm.test('Response JSON Object', function(){\r",
+									"    // ngambil response\r",
 									"    const data = pm.response.json();\r",
-									"    pm.expect(data).to.be.an.instanceOf(Array);\r",
+									"    pm.expect(data).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"x-auth-token ada\", () => {\r",
+									"  pm.request.to.have.header(\"x-auth-token\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -546,6 +980,15 @@
 									"pm.test('Status code 200', function(){\r",
 									"    // ngambil response\r",
 									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"x-auth-token ada\", () => {\r",
+									"  pm.request.to.have.header(\"x-auth-token\");\r",
+									"});\r",
+									"\r",
+									"pm.test('Hasil berupa array', function(){\r",
+									"    const data = pm.response.json();\r",
+									"    pm.expect(data).to.be.an.instanceOf(Array);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -575,7 +1018,68 @@
 						},
 						"description": "Berguna untuk melihat history pembayaran pada akun user\n\nDibutuhkan \n- x-auth-token"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Lihat History Pembayaran Tagihan",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMjgwMTQyOH0.e0RcnjQ1LuSzo_3UUS4AZCQDG8S2OUKr5qVRLqA9Q1k",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/users/membership/history",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"membership",
+										"history"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "264"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"108-CU2Pmul77mVqBkQSwecim6U7ycg\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 21 Jun 2021 10:06:41 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"Nama User\": \"ansel\",\n        \"Id payment\": 4,\n        \"Tanggal Payment\": \"4-6-2021\",\n        \"Value\": 100000,\n        \"Keterangan\": \"Bayar Tagihan Bulanan\"\n    },\n    {\n        \"Nama User\": \"ansel\",\n        \"Id payment\": 5,\n        \"Tanggal Payment\": \"4-6-2021\",\n        \"Value\": 100000,\n        \"Keterangan\": \"Bayar Subcribe member menjadi Membership Kembali\"\n    }\n]"
+						}
+					]
 				},
 				{
 					"name": "View Pertandingan",
@@ -587,6 +1091,17 @@
 									"pm.test('Status code 200', function(){\r",
 									"    // ngambil response\r",
 									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test('Response JSON Object', function(){\r",
+									"    // ngambil response\r",
+									"    const data = pm.response.json();\r",
+									"    pm.expect(data).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"x-auth-token ada\", () => {\r",
+									"  pm.request.to.have.header(\"x-auth-token\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -639,6 +1154,17 @@
 									"pm.test('Status code 200', function(){\r",
 									"    // ngambil response\r",
 									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test('Response JSON Object', function(){\r",
+									"    // ngambil response\r",
+									"    const data = pm.response.json();\r",
+									"    pm.expect(data).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"x-auth-token ada\", () => {\r",
+									"  pm.request.to.have.header(\"x-auth-token\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -837,9 +1363,80 @@
 									"value": "david"
 								}
 							]
-						}
+						},
+						"description": "Berguna untuk melihat user yang terdaftar pada database member maupun user biasa dan dapat menambahkan query untuk mencari lebih spesifik"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "View User",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiJhZG1pbiIsImlhdCI6MTYyMjEwNTg3NH0._-4LikfGbYmxjchojIUWyPZrFPeOkHVtagtdF8CFbdE",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/admin/viewUser",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"viewUser"
+									],
+									"query": [
+										{
+											"key": "nama",
+											"value": "david",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "[\r\n    {\r\n        \"Username\": \"hope\",\r\n        \"Nama User\": \"david\",\r\n        \"Password User\": \"123\",\r\n        \"Email\": \"d4cornia@gmail.com\",\r\n        \"Wallet\": 100000,\r\n        \"Status\": \"Member\"\r\n    },\r\n    {\r\n        \"Username\": \"bare\",\r\n        \"Nama User\": \"ansel\",\r\n        \"Password User\": \"123\",\r\n        \"Email\": \"ansel@gmail.com\",\r\n        \"Wallet\": 0,\r\n        \"Status\": \"Not Member\"\r\n    },\r\n    {\r\n        \"Username\": \"admin\",\r\n        \"Nama User\": \"admin\",\r\n        \"Password User\": \"admin\",\r\n        \"Email\": \"\",\r\n        \"Wallet\": 0,\r\n        \"Status\": \"Not Member\"\r\n    },\r\n    {\r\n        \"Username\": \"bare3\",\r\n        \"Nama User\": \"ansel\",\r\n        \"Password User\": \"123\",\r\n        \"Email\": \"ansel3@gmail.com\",\r\n        \"Wallet\": 0,\r\n        \"Status\": \"Member\"\r\n    }\r\n]"
+						},
+						{
+							"name": "View User With Query",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiJhZG1pbiIsImlhdCI6MTYyMjEwNTg3NH0._-4LikfGbYmxjchojIUWyPZrFPeOkHVtagtdF8CFbdE",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/admin/viewUser?nama=david",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"viewUser"
+									],
+									"query": [
+										{
+											"key": "nama",
+											"value": "david"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "[\r\n    {\r\n        \"Username\": \"hope\",\r\n        \"Nama User\": \"david\",\r\n        \"Password User\": \"123\",\r\n        \"Email\": \"d4cornia@gmail.com\",\r\n        \"Wallet\": 100000,\r\n        \"Status\": \"Member\"\r\n    }\r\n]"
+						}
+					]
 				},
 				{
 					"name": "List Member",
@@ -853,7 +1450,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/api/admin/viewMembership?nama=david",
+							"raw": "{{base_url}}/api/admin/viewMembership",
 							"host": [
 								"{{base_url}}"
 							],
@@ -865,12 +1462,77 @@
 							"query": [
 								{
 									"key": "nama",
-									"value": "david"
+									"value": "david",
+									"disabled": true
 								}
 							]
-						}
+						},
+						"description": "Berguna untuk melihat user yang menjadi member dan dapat menambahkan query untuk mencari lebih spesifik"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "List Member",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiJhZG1pbiIsImlhdCI6MTYyMjEwNTg3NH0._-4LikfGbYmxjchojIUWyPZrFPeOkHVtagtdF8CFbdE",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/admin/viewMembership?nama=david",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"viewMembership"
+									],
+									"query": [
+										{
+											"key": "nama",
+											"value": "david"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "[\r\n    {\r\n        \"Username\": \"hope\",\r\n        \"Member Name\": \"david\",\r\n        \"Last Payment \": \"19-5-2021\",\r\n        \"Member Since \": \"19-5-2021\",\r\n        \"Unsubsribe \": \"-\"\r\n    }\r\n]"
+						},
+						{
+							"name": "List Member",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiJhZG1pbiIsImlhdCI6MTYyMjEwNTg3NH0._-4LikfGbYmxjchojIUWyPZrFPeOkHVtagtdF8CFbdE",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/admin/viewMembership",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"viewMembership"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "[\r\n    {\r\n        \"Username\": \"hope\",\r\n        \"Member Name\": \"david\",\r\n        \"Last Payment \": \"19-5-2021\",\r\n        \"Member Since \": \"19-5-2021\",\r\n        \"Unsubsribe \": \"-\"\r\n    },\r\n    {\r\n        \"Username\": \"bare3\",\r\n        \"Member Name\": \"ansel\",\r\n        \"Last Payment \": \"3-6-2021\",\r\n        \"Member Since \": \"3-6-2021\",\r\n        \"Unsubsribe \": \"-\"\r\n    }\r\n]"
+						}
+					]
 				},
 				{
 					"name": "Refresh Stadium",
@@ -906,18 +1568,77 @@
 									"disabled": true
 								}
 							]
-						}
+						},
+						"description": "Berguna untuk merefresh data stadium dari API menuju database lokal yang tidak dapat di hapus dan edit oleh admin maupun user lain"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Refresh Stadium",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiJhZG1pbiIsImlhdCI6MTYyMjEwNTg3NH0._-4LikfGbYmxjchojIUWyPZrFPeOkHVtagtdF8CFbdE",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/admin/refreshStadium",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"refreshStadium"
+									],
+									"query": [
+										{
+											"key": "nama",
+											"value": "david2",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\r\n    \"Msg\": \"Load Stadium Succes!\"\r\n}"
+						}
+					]
 				},
 				{
 					"name": "Refresh Team",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": ""
-						}
+							"raw": "{{base_url}}/api/admin/team/refresh",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"team",
+								"refresh"
+							]
+						},
+						"description": "Berguna untuk mengupdate tim sesuai yang ada di third party ke database web service\n\nDibutuhkan \n- x-auth-token\n- auth-admin"
 					},
 					"response": []
 				},
@@ -925,7 +1646,13 @@
 					"name": "Add Team",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
@@ -952,7 +1679,8 @@
 								"team",
 								"add"
 							]
-						}
+						},
+						"description": "Berguna untuk menambahkan tim ke database web service, dengan mengisikan\n- nama tim\n- kode negara tim\n\nDibutuhkan \n- x-auth-token\n- auth-admin"
 					},
 					"response": []
 				},
@@ -994,7 +1722,8 @@
 								"update",
 								"faaW2UFsdd8y9geo"
 							]
-						}
+						},
+						"description": "Berguna untuk mengganti informasi tim dan melakukan update ke database web service, dengan mengisikan\n- id tim lama\n- nama tim baru\n- kode negara tim baru\n\nDibutuhkan \n- x-auth-token\n- auth-admin"
 					},
 					"response": []
 				},
@@ -1021,7 +1750,8 @@
 								"update",
 								"5fda5faf0a85b878"
 							]
-						}
+						},
+						"description": "Berguna untuk menghapus tim dari database web service, dengan mengisikan\n- id tim\n\nDibutuhkan \n- x-auth-token\n- auth-admin"
 					},
 					"response": []
 				}
@@ -1042,7 +1772,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/api/stadium/list",
+							"raw": "{{base_url}}/api/stadium/list?name=Prince",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1054,13 +1784,83 @@
 							"query": [
 								{
 									"key": "name",
-									"value": "",
-									"disabled": true
+									"value": "Prince"
 								}
 							]
-						}
+						},
+						"description": "Berguna untuk melihat semua stadium yang ada pada database dapat menggunakan query string untuk melihat stadium atau semua stadium tanpa query string"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "List Stadium",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiJhZG1pbiIsImlhdCI6MTYyMjEwNTg3NH0._-4LikfGbYmxjchojIUWyPZrFPeOkHVtagtdF8CFbdE",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/stadium/list",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"stadium",
+										"list"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "Prince",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "[\r\n    {\r\n        \"Id Stadium\": \"5fb969788aa64e3c\",\r\n        \"Nama Stadium\": \"Doha Stadium\",\r\n        \"City Stadium\": \"Sakhnin\",\r\n        \"Country Stadium\": \"IL\",\r\n        \"Capacity Stadium\": 8500,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788b1699e1\",\r\n        \"Nama Stadium\": \"Gallagher Stadium\",\r\n        \"City Stadium\": \"Maidstone\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 2363,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788b3d7ac7\",\r\n        \"Nama Stadium\": \"Prince Moulay Abdellah Stadium\",\r\n        \"City Stadium\": \"Rabat\",\r\n        \"Country Stadium\": \"MA\",\r\n        \"Capacity Stadium\": 52000,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788b78261a\",\r\n        \"Nama Stadium\": \"The Giant Hospitality Stadium\",\r\n        \"City Stadium\": \"Llandudno\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 1503,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788b929a97\",\r\n        \"Nama Stadium\": \"Yud-Alef Stadium\",\r\n        \"City Stadium\": \"Ashdod\",\r\n        \"Country Stadium\": \"IL\",\r\n        \"Capacity Stadium\": 8200,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788ba6a2e3\",\r\n        \"Nama Stadium\": \"King Fahd International Stadium\",\r\n        \"City Stadium\": \"Riyadh\",\r\n        \"Country Stadium\": \"SA\",\r\n        \"Capacity Stadium\": 68752,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788bc0099b\",\r\n        \"Nama Stadium\": \"Emirates Stadium\",\r\n        \"City Stadium\": \"London\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 60272,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788bd5718b\",\r\n        \"Nama Stadium\": \"Edgeley Park\",\r\n        \"City Stadium\": \"Stockport\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 10832,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788becec9b\",\r\n        \"Nama Stadium\": \"Liberty Way\",\r\n        \"City Stadium\": \"Nuneaton\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 6250,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788c030eb1\",\r\n        \"Nama Stadium\": \"Aggborough\",\r\n        \"City Stadium\": \"Kidderminster\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 6238,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788c16e714\",\r\n        \"Nama Stadium\": \"World of Smile Stadium\",\r\n        \"City Stadium\": \"null\",\r\n        \"Country Stadium\": \"null\",\r\n        \"Capacity Stadium\": 0,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788c2c79cb\",\r\n        \"Nama Stadium\": \"The Northolme\",\r\n        \"City Stadium\": \"Gainsborough\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 4304,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788c3fd211\",\r\n        \"Nama Stadium\": \"Broadhurst Park\",\r\n        \"City Stadium\": \"Manchester\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 4400,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788c5d1b04\",\r\n        \"Nama Stadium\": \"The Shay\",\r\n        \"City Stadium\": \"Halifax\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 14061,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788c717b4d\",\r\n        \"Nama Stadium\": \"The Chorley Group Victory Park Stadium\",\r\n        \"City Stadium\": \"Chorley\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 4100,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788c858111\",\r\n        \"Nama Stadium\": \"Horsfall Stadium\",\r\n        \"City Stadium\": \"Bradford\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 0,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788c9884a3\",\r\n        \"Nama Stadium\": \"Impact Arena\",\r\n        \"City Stadium\": \"Alfreton\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 3600,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788cadf097\",\r\n        \"Nama Stadium\": \"The Enclosed Ground\",\r\n        \"City Stadium\": \"Whitehawk\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 2000,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788cc2623c\",\r\n        \"Nama Stadium\": \"Woodspring Stadium\",\r\n        \"City Stadium\": \"Weston-super-Mare\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 3500,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788cd7a027\",\r\n        \"Nama Stadium\": \"Park View Road\",\r\n        \"City Stadium\": \"null\",\r\n        \"Country Stadium\": \"null\",\r\n        \"Capacity Stadium\": 5500,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788cf0ffc4\",\r\n        \"Nama Stadium\": \"Court Place Farm\",\r\n        \"City Stadium\": \"Oxford\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 0,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788d0db763\",\r\n        \"Nama Stadium\": \"York Road\",\r\n        \"City Stadium\": \"Maidenhead\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 3000,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788d272edb\",\r\n        \"Nama Stadium\": \"Bulpit Lane\",\r\n        \"City Stadium\": \"Hungerford\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 2500,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788d40e066\",\r\n        \"Nama Stadium\": \"Beveree Stadium\",\r\n        \"City Stadium\": \"Hampton, London\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 3500,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788d58a71f\",\r\n        \"Nama Stadium\": \"Stonebridge Road Stadium\",\r\n        \"City Stadium\": \"Northfleet\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 5011,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788d6df9cf\",\r\n        \"Nama Stadium\": \"Rookery Hill\",\r\n        \"City Stadium\": \"Corringham, Essex\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 4000,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788d9faf3d\",\r\n        \"Nama Stadium\": \"Stade Saniat Rmel\",\r\n        \"City Stadium\": \"Tetouan\",\r\n        \"Country Stadium\": \"MA\",\r\n        \"Capacity Stadium\": 15000,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788dbd79a1\",\r\n        \"Nama Stadium\": \"Stade Municipal\",\r\n        \"City Stadium\": \"Kenitra\",\r\n        \"Country Stadium\": \"MA\",\r\n        \"Capacity Stadium\": 15000,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788dd8ddc5\",\r\n        \"Nama Stadium\": \"Bootham Crescent\",\r\n        \"City Stadium\": \"York\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 7872,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788e029525\",\r\n        \"Nama Stadium\": \"Borough Sports Ground\",\r\n        \"City Stadium\": \"null\",\r\n        \"Country Stadium\": \"null\",\r\n        \"Capacity Stadium\": 0,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788e26b774\",\r\n        \"Nama Stadium\": \"Moss Rose\",\r\n        \"City Stadium\": \"Macclesfield\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 6355,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788e4090fe\",\r\n        \"Nama Stadium\": \"Haig Avenue\",\r\n        \"City Stadium\": \"null\",\r\n        \"Country Stadium\": \"null\",\r\n        \"Capacity Stadium\": 0,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788e5d986b\",\r\n        \"Nama Stadium\": \"Sincil Bank\",\r\n        \"City Stadium\": \"Lincoln\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 10120,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788e7879a5\",\r\n        \"Nama Stadium\": \"The New Lawn\",\r\n        \"City Stadium\": \"Nailsworth\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 5147,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788ea17f10\",\r\n        \"Nama Stadium\": \"Deva Stadium\",\r\n        \"City Stadium\": \"null\",\r\n        \"Country Stadium\": \"null\",\r\n        \"Capacity Stadium\": 0,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788ed56b83\",\r\n        \"Nama Stadium\": \"Vicarage Road\",\r\n        \"City Stadium\": \"Watford\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 21400,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788ef345bc\",\r\n        \"Nama Stadium\": \"Al-Hassan Stadium\",\r\n        \"City Stadium\": \"Irbid\",\r\n        \"Country Stadium\": \"JO\",\r\n        \"Capacity Stadium\": 16000,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788f0e447a\",\r\n        \"Nama Stadium\": \"CCM Kirumba Stadium\",\r\n        \"City Stadium\": \"Mwanza\",\r\n        \"Country Stadium\": \"TZ\",\r\n        \"Capacity Stadium\": 35000,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788f305ebf\",\r\n        \"Nama Stadium\": \"Karume Memorial Stadium\",\r\n        \"City Stadium\": \"Dar es Salaam\",\r\n        \"Country Stadium\": \"TZ\",\r\n        \"Capacity Stadium\": 5000,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969788fa99748\",\r\n        \"Nama Stadium\": \"Kingfield Stadium\",\r\n        \"City Stadium\": \"Woking-Foxhills\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 6036,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb96978902010a0\",\r\n        \"Nama Stadium\": \"Spotless Stadium\",\r\n        \"City Stadium\": \"null\",\r\n        \"Country Stadium\": \"null\",\r\n        \"Capacity Stadium\": 0,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb96978906860a9\",\r\n        \"Nama Stadium\": \"Westpac Stadium\",\r\n        \"City Stadium\": \"Wellington\",\r\n        \"Country Stadium\": \"NZ\",\r\n        \"Capacity Stadium\": 33500,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969789083bbfd\",\r\n        \"Nama Stadium\": \"Perry Park\",\r\n        \"City Stadium\": \"Brisbane\",\r\n        \"Country Stadium\": \"AU\",\r\n        \"Capacity Stadium\": 5000,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697890a24220\",\r\n        \"Nama Stadium\": \"Braga Municipal\",\r\n        \"City Stadium\": \"Braga\",\r\n        \"Country Stadium\": \"PT\",\r\n        \"Capacity Stadium\": 30286,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697890b9541f\",\r\n        \"Nama Stadium\": \"London Borough of Barking & Dagenham Stadium\",\r\n        \"City Stadium\": \"null\",\r\n        \"Country Stadium\": \"null\",\r\n        \"Capacity Stadium\": 0,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697890d4b523\",\r\n        \"Nama Stadium\": \"Teddy Stadium\",\r\n        \"City Stadium\": \"Jerusalem\",\r\n        \"Country Stadium\": \"IL\",\r\n        \"Capacity Stadium\": 21600,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697890f03b2d\",\r\n        \"Nama Stadium\": \"London Stadium\",\r\n        \"City Stadium\": \"London\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 66000,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697891069028\",\r\n        \"Nama Stadium\": \"Acre Municipal Stadium\",\r\n        \"City Stadium\": \"null\",\r\n        \"Country Stadium\": \"null\",\r\n        \"Capacity Stadium\": 0,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb96978911dd836\",\r\n        \"Nama Stadium\": \"Green Stadium\",\r\n        \"City Stadium\": \"Nazareth\",\r\n        \"Country Stadium\": \"IL\",\r\n        \"Capacity Stadium\": 4000,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb96978913643fd\",\r\n        \"Nama Stadium\": \"Afula Illit Stadium\",\r\n        \"City Stadium\": \"Afula\",\r\n        \"Country Stadium\": \"IL\",\r\n        \"Capacity Stadium\": 14000,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb96978915b4795\",\r\n        \"Nama Stadium\": \"Wheatsheaf Park\",\r\n        \"City Stadium\": \"Staines\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 3009,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb96978916f7598\",\r\n        \"Nama Stadium\": \"Imber Court\",\r\n        \"City Stadium\": \"Molesey\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 3000,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697891854fb5\",\r\n        \"Nama Stadium\": \"Moatside\",\r\n        \"City Stadium\": \"Merstham\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 2000,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb96978919bc2e1\",\r\n        \"Nama Stadium\": \"Victory Road\",\r\n        \"City Stadium\": \"Leiston\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 2500,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697891b39313\",\r\n        \"Nama Stadium\": \"West Leigh Park\",\r\n        \"City Stadium\": \"Havant\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 5250,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697891d3137e\",\r\n        \"Nama Stadium\": \"Earlsmead Stadium\",\r\n        \"City Stadium\": \"South Harrow\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 3070,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697891f1e492\",\r\n        \"Nama Stadium\": \"Champion Hill\",\r\n        \"City Stadium\": \"Dulwich\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 3000,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb96978920f4829\",\r\n        \"Nama Stadium\": \"New Lodge\",\r\n        \"City Stadium\": \"Billericay\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 0,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969789227d7a3\",\r\n        \"Nama Stadium\": \"Bob Lucas Stadium\",\r\n        \"City Stadium\": \"Weymouth\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 10000,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697892413480\",\r\n        \"Nama Stadium\": \"The DCS Stadium\",\r\n        \"City Stadium\": \"Stratford-upon-Avon\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 0,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb96978925b7fbf\",\r\n        \"Nama Stadium\": \"Beaconsfield\",\r\n        \"City Stadium\": \"null\",\r\n        \"Country Stadium\": \"null\",\r\n        \"Capacity Stadium\": 0,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb96978927c8896\",\r\n        \"Nama Stadium\": \"Central Ground\",\r\n        \"City Stadium\": \"Sutton Coldfield\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 2000,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697892b7c767\",\r\n        \"Nama Stadium\": \"West Lancashire College Stadium\",\r\n        \"City Stadium\": \"Skelmersdale\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 2500,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697892dce353\",\r\n        \"Nama Stadium\": \"Dales Lane\",\r\n        \"City Stadium\": \"Walsall\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 1400,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb96978930857c2\",\r\n        \"Nama Stadium\": \"The Weaver Stadium\",\r\n        \"City Stadium\": \"Nantwich\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 3500,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb96978932122a0\",\r\n        \"Nama Stadium\": \"New Manor Ground\",\r\n        \"City Stadium\": \"Ilkeston\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 3500,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969789345694c\",\r\n        \"Nama Stadium\": \"Keys Park\",\r\n        \"City Stadium\": \"Hednesford\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 6500,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697893603612\",\r\n        \"Nama Stadium\": \"Westfield Lane Stadium\",\r\n        \"City Stadium\": \"South Elmsall\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 2087,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697893750d39\",\r\n        \"Nama Stadium\": \"Penydarren Park\",\r\n        \"City Stadium\": \"Merthyr Tydfil\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 10000,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb96978938e2404\",\r\n        \"Nama Stadium\": \"Tatnam\",\r\n        \"City Stadium\": \"Poole\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 2000,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697893a622ce\",\r\n        \"Nama Stadium\": \"Tameside Stadium\",\r\n        \"City Stadium\": \"Ashton-under-Lyne\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 4000,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697893c0e110\",\r\n        \"Nama Stadium\": \"Adams Park\",\r\n        \"City Stadium\": \"High Wycombe\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 9617,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697893d6a0e6\",\r\n        \"Nama Stadium\": \"Fratton Park\",\r\n        \"City Stadium\": \"Portsmouth\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 21100,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697893ecda52\",\r\n        \"Nama Stadium\": \"Globe Arena\",\r\n        \"City Stadium\": \"Morecambe\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 6476,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb96978940249a5\",\r\n        \"Nama Stadium\": \"St James Park\",\r\n        \"City Stadium\": \"Exeter\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 8830,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969789417d386\",\r\n        \"Nama Stadium\": \"Keepmoat Stadium\",\r\n        \"City Stadium\": \"Doncaster\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 15231,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697894341801\",\r\n        \"Nama Stadium\": \"Broadfield Stadium\",\r\n        \"City Stadium\": \"Crawley\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 6134,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969789456cb2e\",\r\n        \"Nama Stadium\": \"Colchester Community Stadium\",\r\n        \"City Stadium\": \"null\",\r\n        \"Country Stadium\": \"null\",\r\n        \"Capacity Stadium\": 0,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969789470216f\",\r\n        \"Nama Stadium\": \"Brunton Park\",\r\n        \"City Stadium\": \"Carlisle\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 18202,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb96978948c3552\",\r\n        \"Nama Stadium\": \"Abbey Stadium\",\r\n        \"City Stadium\": \"Cambridge\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 8127,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697894a33ca1\",\r\n        \"Nama Stadium\": \"Bloomfield Road\",\r\n        \"City Stadium\": \"Blackpool\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 12555,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697894baf19c\",\r\n        \"Nama Stadium\": \"The Hive Stadium\",\r\n        \"City Stadium\": \"London\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 5634,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697894dabb50\",\r\n        \"Nama Stadium\": \"The Crown Ground\",\r\n        \"City Stadium\": \"Accrington\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 5057,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969789508864d\",\r\n        \"Nama Stadium\": \"County Ground\",\r\n        \"City Stadium\": \"Swindon\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 15728,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969789522bc4e\",\r\n        \"Nama Stadium\": \"Greenhous Meadow\",\r\n        \"City Stadium\": \"null\",\r\n        \"Country Stadium\": \"null\",\r\n        \"Capacity Stadium\": 0,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb96978953a6578\",\r\n        \"Nama Stadium\": \"Glanford Park\",\r\n        \"City Stadium\": \"Scunthorpe\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 9088,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb96978955348c7\",\r\n        \"Nama Stadium\": \"SportsDirect.com Park\",\r\n        \"City Stadium\": \"null\",\r\n        \"Country Stadium\": \"null\",\r\n        \"Capacity Stadium\": 0,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb96978956babc4\",\r\n        \"Nama Stadium\": \"Sixfields Stadium\",\r\n        \"City Stadium\": \"Northampton\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 7798,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb969789581dc3c\",\r\n        \"Nama Stadium\": \"Priestfield Stadium\",\r\n        \"City Stadium\": \"null\",\r\n        \"Country Stadium\": \"null\",\r\n        \"Capacity Stadium\": 0,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb96978959740ec\",\r\n        \"Nama Stadium\": \"Ricoh Arena\",\r\n        \"City Stadium\": \"Coventry\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 32500,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697895add3fe\",\r\n        \"Nama Stadium\": \"Proact Stadium\",\r\n        \"City Stadium\": \"Chesterfield\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 10504,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697895c2f33f\",\r\n        \"Nama Stadium\": \"The Valley\",\r\n        \"City Stadium\": \"London\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 27111,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697895dc86f5\",\r\n        \"Nama Stadium\": \"Gigg Lane\",\r\n        \"City Stadium\": \"Bury\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 11840,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697895fd2c43\",\r\n        \"Nama Stadium\": \"DW Stadium\",\r\n        \"City Stadium\": \"Wigan\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 25138,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697896120aef\",\r\n        \"Nama Stadium\": \"Hillsborough Stadium\",\r\n        \"City Stadium\": \"Sheffield\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 39812,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb96978962824bb\",\r\n        \"Nama Stadium\": \"Loftus Road Stadium\",\r\n        \"City Stadium\": \"null\",\r\n        \"Country Stadium\": \"null\",\r\n        \"Capacity Stadium\": 0,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb9697896406367\",\r\n        \"Nama Stadium\": \"City Ground\",\r\n        \"City Stadium\": \"Nottingham\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 30603,\r\n        \"Editable\": \"Not Editable\"\r\n    },\r\n    {\r\n        \"Id Stadium\": \"5fb96978965419a7\",\r\n        \"Nama Stadium\": \"Carrow Road\",\r\n        \"City Stadium\": \"Norwich\",\r\n        \"Country Stadium\": \"GB\",\r\n        \"Capacity Stadium\": 27244,\r\n        \"Editable\": \"Not Editable\"\r\n    }\r\n]"
+						},
+						{
+							"name": "List Stadium With Query",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiJhZG1pbiIsImlhdCI6MTYyMjEwNTg3NH0._-4LikfGbYmxjchojIUWyPZrFPeOkHVtagtdF8CFbdE",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/stadium/list?name=Prince",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"stadium",
+										"list"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "Prince"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "[\r\n    {\r\n        \"Id Stadium\": \"5fb969788b3d7ac7\",\r\n        \"Nama Stadium\": \"Prince Moulay Abdellah Stadium\",\r\n        \"City Stadium\": \"Rabat\",\r\n        \"Country Stadium\": \"MA\",\r\n        \"Capacity Stadium\": 52000,\r\n        \"Editable\": \"Not Editable\"\r\n    }\r\n]"
+						}
+					]
 				},
 				{
 					"name": "Add Stadium",
@@ -1108,9 +1908,64 @@
 								"stadium",
 								"add"
 							]
-						}
+						},
+						"description": "Berguna untuk menambahkan stadium baru di luar dari stadium yang sudah ada pada database"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Add Stadium",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiJhZG1pbiIsImlhdCI6MTYyMjEwNTg3NH0._-4LikfGbYmxjchojIUWyPZrFPeOkHVtagtdF8CFbdE",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "nama",
+											"value": "Stadium SS",
+											"type": "text"
+										},
+										{
+											"key": "city",
+											"value": "IG",
+											"type": "text"
+										},
+										{
+											"key": "country",
+											"value": "US",
+											"type": "text"
+										},
+										{
+											"key": "kapasitas",
+											"value": "200",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/stadium/add",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"stadium",
+										"add"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\r\n    \"Id Stadium\": \"iJPFugspYGWW60cc0664FEouggV31zic\",\r\n    \"Nama Stadium\": \"Stadium SS\",\r\n    \"City Stadium\": \"IG\",\r\n    \"Country Stadium\": \"US\",\r\n    \"Capacity Stadium\": \"200\",\r\n    \"Editable\": \"Editable\"\r\n}"
+						}
+					]
 				},
 				{
 					"name": "Edit Stadium",
@@ -1128,7 +1983,7 @@
 							"urlencoded": [
 								{
 									"key": "id_stadium",
-									"value": "6FufgH8bI60af506bCUxAraR5BSpD9Z9",
+									"value": "iJPFugspYGWW60cc0664FEouggV31zic",
 									"type": "text"
 								},
 								{
@@ -1163,9 +2018,69 @@
 								"stadium",
 								"edit"
 							]
-						}
+						},
+						"description": "Berguna untuk mengubah data stadium tetapi khusus untuk stadium yang bersifat editable yang dapat di ubah, untuk body dapat di isi yang ingin di ganti saja tidak perlu memasukan semuanyanya"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Edit Stadium",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiJhZG1pbiIsImlhdCI6MTYyMjEwNTg3NH0._-4LikfGbYmxjchojIUWyPZrFPeOkHVtagtdF8CFbdE",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "id_stadium",
+											"value": "6FufgH8bI60af506bCUxAraR5BSpD9Z9",
+											"type": "text"
+										},
+										{
+											"key": "nama",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "capacity",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "country",
+											"value": "IS",
+											"type": "text"
+										},
+										{
+											"key": "city",
+											"value": "",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/stadium/edit",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"stadium",
+										"edit"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\r\n    \"Id Stadium\": \"iJPFugspYGWW60cc0664FEouggV31zic\",\r\n    \"Nama Stadium\": \"Stadium SS\",\r\n    \"City Stadium\": \"IG\",\r\n    \"Country Stadium\": \"IS\",\r\n    \"Capacity Stadium\": 200,\r\n    \"Editable\": \"Editable\"\r\n}"
+						}
+					]
 				},
 				{
 					"name": "Delete Stadium",
@@ -1192,12 +2107,49 @@
 							"variable": [
 								{
 									"key": "id_stadium",
-									"value": "awMkhoBEpNs60af5964HS0mow6jwr6ub"
+									"value": "iJPFugspYGWW60cc0664FEouggV31zic"
 								}
 							]
-						}
+						},
+						"description": "Berguna untuk mengubah data stadium tetapi khusus untuk stadium yang bersifat deletable yang dapat di delete"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Delete Stadium",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiJhZG1pbiIsImlhdCI6MTYyMjEwNTg3NH0._-4LikfGbYmxjchojIUWyPZrFPeOkHVtagtdF8CFbdE",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/stadium/delete/:id_stadium",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"stadium",
+										"delete",
+										":id_stadium"
+									],
+									"variable": [
+										{
+											"key": "id_stadium",
+											"value": "awMkhoBEpNs60af5964HS0mow6jwr6ub"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\r\n    \"msg\": \"Delete Stadium Success!\"\r\n}"
+						}
+					]
 				}
 			]
 		}

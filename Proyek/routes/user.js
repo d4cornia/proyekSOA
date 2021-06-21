@@ -391,7 +391,7 @@ router.post('/membership/bayar', [cekJWT, authSubscriber], async (req, res)=> {
             'Nama User': req.user.nama,
             'Pembayaran Terakhir': resu[0].last_payment,
             'End Date': resu[0].end_date,
-            'Tagihan Bulan ini': 'Lunas'
+            'Tagihan Bulan ini': 'Telah Lunas'
         });
     }
 
