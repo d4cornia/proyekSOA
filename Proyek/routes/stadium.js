@@ -155,7 +155,7 @@ router.delete('/delete/:id_stadium',[cekJWT,authAdmin],async function (req,res) 
     }
     else{
         await db.query(`delete from stadium where id_stadium = '${req.params.id_stadium}'`);
-        res.status(201).json({"error":"Delete Stadium Success!"});
+        res.status(200).json({"msg":"Delete Stadium Success!"});
     }
 });
 module.exports = router;

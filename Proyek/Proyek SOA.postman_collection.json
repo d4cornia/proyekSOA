@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b66b9794-e865-4b8f-a23b-a3548b33e237",
+		"_postman_id": "f5d81169-2b47-4c2d-9a7a-991a2345dce6",
 		"name": "Proyek SOA",
 		"description": "Dokumentasi Proyek SOA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -1960,146 +1960,6 @@
 							"body": "{\r\n    \"Msg\": \"Load Stadium Succes!\"\r\n}"
 						}
 					]
-				},
-				{
-					"name": "Refresh Team",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "x-auth-token",
-								"value": "",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/api/admin/team/refresh",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"team",
-								"refresh"
-							]
-						},
-						"description": "Berguna untuk mengupdate tim sesuai yang ada di third party ke database web service\n\nDibutuhkan \n- x-auth-token\n- auth-admin"
-					},
-					"response": []
-				},
-				{
-					"name": "Add Team",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "x-auth-token",
-								"value": "",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "nama",
-									"value": "chelsea",
-									"type": "text"
-								},
-								{
-									"key": "country",
-									"value": "EN",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{base_url}}/api/admin/team/add",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"team",
-								"add"
-							]
-						},
-						"description": "Berguna untuk menambahkan tim ke database web service, dengan mengisikan\n- nama tim\n- kode negara tim\n\nDibutuhkan \n- x-auth-token\n- auth-admin"
-					},
-					"response": []
-				},
-				{
-					"name": "Update Team",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "x-auth-token",
-								"value": "",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "nama",
-									"value": "milan",
-									"type": "text"
-								},
-								{
-									"key": "country",
-									"value": "EU",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{base_url}}/api/admin/team/update/faaW2UFsdd8y9geo",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"team",
-								"update",
-								"faaW2UFsdd8y9geo"
-							]
-						},
-						"description": "Berguna untuk mengganti informasi tim dan melakukan update ke database web service, dengan mengisikan\n- id tim lama\n- nama tim baru\n- kode negara tim baru\n\nDibutuhkan \n- x-auth-token\n- auth-admin"
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Team",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "x-auth-token",
-								"value": "",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/api/admin/team/update/5fda5faf0a85b878",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"team",
-								"update",
-								"5fda5faf0a85b878"
-							]
-						},
-						"description": "Berguna untuk menghapus tim dari database web service, dengan mengisikan\n- id tim\n\nDibutuhkan \n- x-auth-token\n- auth-admin"
-					},
-					"response": []
 				}
 			]
 		},
@@ -2496,6 +2356,151 @@
 							"body": "{\r\n    \"msg\": \"Delete Stadium Success!\"\r\n}"
 						}
 					]
+				}
+			]
+		},
+		{
+			"name": "Team",
+			"item": [
+				{
+					"name": "Refresh Team",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/team/refresh",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"team",
+								"refresh"
+							]
+						},
+						"description": "Berguna untuk mengupdate tim sesuai yang ada di third party ke database web service\n\nDibutuhkan \n- x-auth-token\n- auth-admin"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Team",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nama",
+									"value": "chelsea",
+									"type": "text"
+								},
+								{
+									"key": "country",
+									"value": "EN",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/team/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"team",
+								"add"
+							]
+						},
+						"description": "Berguna untuk menambahkan tim ke database web service, dengan mengisikan\n- nama tim\n- kode negara tim\n\nDibutuhkan \n- x-auth-token\n- auth-admin"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Team",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nama",
+									"value": "milan",
+									"type": "text"
+								},
+								{
+									"key": "country",
+									"value": "EU",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/team/update/faaW2UFsdd8y9geo",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"team",
+								"update",
+								"faaW2UFsdd8y9geo"
+							]
+						},
+						"description": "Berguna untuk mengganti informasi tim dan melakukan update ke database web service, dengan mengisikan\n- id tim lama\n- nama tim baru\n- kode negara tim baru\n\nDibutuhkan \n- x-auth-token\n- auth-admin"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Team",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/team/update/5fda5faf0a85b878",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"team",
+								"update",
+								"5fda5faf0a85b878"
+							]
+						},
+						"description": "Berguna untuk menghapus tim dari database web service, dengan mengisikan\n- id tim\n\nDibutuhkan \n- x-auth-token\n- auth-admin"
+					},
+					"response": []
 				}
 			]
 		}
