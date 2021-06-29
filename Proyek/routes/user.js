@@ -487,7 +487,7 @@ router.get("/matches/:nama_team_1/:nama_team_2", [cekJWT, authSubscriber, cekMem
     };
 
     axios.request(options).then(function (response) {
-        res.status(200).json(response.data);
+        res.status(200).json(response.data.result);
     }).catch(function (error) {
         res.status(500).json({
             'err Msg': 'Internal Error'
@@ -515,7 +515,7 @@ router.get("/history/:nama_team", [cekJWT, authSubscriber, cekMembershipExpired]
     };
 
     axios.request(options).then(function (response) {
-        res.status(200).json(response.data);
+        res.status(200).json(response.data.result);
     }).catch(function (error) {
         res.status(500).json({
             'err Msg': 'Internal Error'
@@ -523,6 +523,7 @@ router.get("/history/:nama_team", [cekJWT, authSubscriber, cekMembershipExpired]
         console.error(error);
     });
 });
+
 
 
 
