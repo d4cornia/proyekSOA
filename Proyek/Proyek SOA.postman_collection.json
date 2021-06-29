@@ -87,7 +87,101 @@
 						},
 						"description": "Register user dilakukan dengan mengisikan\n- no_telepon\n- username\n- nama\n- email\n- password\n- confirm_password\n- foto"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Register",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "no_telepon",
+											"value": "081350991276",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "barenedie",
+											"type": "text"
+										},
+										{
+											"key": "nama",
+											"value": "ansells",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "ansell@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "123",
+											"type": "text"
+										},
+										{
+											"key": "confirm_password",
+											"value": "123",
+											"type": "text"
+										},
+										{
+											"key": "foto",
+											"type": "file",
+											"src": "/C:/Users/user/Downloads/37976.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/users/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "137"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"89-PyiuxZnQtNuhBUBvuocKuI7rkWg\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Jun 2021 09:13:59 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"No Telepon\": \"081350991276\",\n    \"Username\": \"barenedie\",\n    \"Nama User\": \"ansells\",\n    \"API Key\": \"zL6jBC4Saq95W7270i1e\",\n    \"Status\": \"Register Berhasil!\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Api key",
@@ -370,7 +464,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMjgwMTQyOH0.e0RcnjQ1LuSzo_3UUS4AZCQDG8S2OUKr5qVRLqA9Q1k",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmVuZWRpZSIsInBhc3N3b3JkIjoiMTIzIiwiaWF0IjoxNjI0OTU4MDkxfQ.2zgc3TSZ1BL2XU2QDb9D4om69GX3V--ji_wUILITVfs",
 								"type": "text"
 							}
 						],
@@ -480,7 +574,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMjgwMTQyOH0.e0RcnjQ1LuSzo_3UUS4AZCQDG8S2OUKr5qVRLqA9Q1k",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmVuZWRpZSIsInBhc3N3b3JkIjoiMTIzIiwiaWF0IjoxNjI0OTU4MDkxfQ.2zgc3TSZ1BL2XU2QDb9D4om69GX3V--ji_wUILITVfs",
 								"type": "text"
 							}
 						],
@@ -631,7 +725,134 @@
 						},
 						"description": "Berguna untuk mendaftarkan akun user dari member biasa, menjadi subsciber member\n\nDibutuhkan \n- x-auth-token\n- wallet : 100000 (jika akun pernah terdaftar sebagai subscriber), 0 (jika akun baru pertama kali daftar sebagai subscriber)"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Subscribe Membership",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmVuZWRpZSIsInBhc3N3b3JkIjoiMTIzIiwiaWF0IjoxNjI0OTU4MDkxfQ.2zgc3TSZ1BL2XU2QDb9D4om69GX3V--ji_wUILITVfs",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{base_url}}/api/users/membership",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"membership"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "124"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"7c-U18Cu1ki9L6SbvpgeWTxaBDFzW8\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Jun 2021 09:15:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Nama User\": \"ansells\",\n    \"Status\": \"Berhasil subscribe sebagai member!\",\n    \"Subscription Date\": \"29-6-2021\",\n    \"End Date\": \"29-7-2021\"\n}"
+						},
+						{
+							"name": "Subscribe Membership Lagi",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmVuZWRpZSIsInBhc3N3b3JkIjoiMTIzIiwiaWF0IjoxNjI0OTU4MDkxfQ.2zgc3TSZ1BL2XU2QDb9D4om69GX3V--ji_wUILITVfs",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{base_url}}/api/users/membership",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"membership"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "142"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"8e-3LzLXyH+wqWCrV6u9cvRARM6LK4\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Jun 2021 09:15:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Nama User\": \"ansells\",\n    \"Status\": \"Berhasil subscribe kembali sebagai member\",\n    \"Subscription Date\": \"29-6-2021\",\n    \"End Date\": \"29-7-2021\",\n    \"Wallet\": 0\n}"
+						}
+					]
 				},
 				{
 					"name": "Unsubscribe",
@@ -645,12 +866,12 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"\r",
 									"pm.test('Response JSON Object', function(){\r",
 									"    // ngambil response\r",
 									"    const data = pm.response.json();\r",
 									"    pm.expect(data).to.be.an(\"object\");\r",
 									"});\r",
+									"\r",
 									"pm.test(\"x-auth-token ada\", () => {\r",
 									"  pm.request.to.have.header(\"x-auth-token\");\r",
 									"});"
@@ -664,7 +885,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMjgwMTQyOH0.e0RcnjQ1LuSzo_3UUS4AZCQDG8S2OUKr5qVRLqA9Q1k",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmVuZWRpZSIsInBhc3N3b3JkIjoiMTIzIiwiaWF0IjoxNjI0OTU4MDkxfQ.2zgc3TSZ1BL2XU2QDb9D4om69GX3V--ji_wUILITVfs",
 								"type": "text"
 							}
 						],
@@ -681,7 +902,67 @@
 						},
 						"description": "Berguna untuk tidak menjadi subscriber member\n\nDibutuhkan \n- x-auth-token\n- semua tagihan lunas / tidak ada tagihan"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Unsubscribe",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmVuZWRpZSIsInBhc3N3b3JkIjoiMTIzIiwiaWF0IjoxNjI0OTU4MDkxfQ.2zgc3TSZ1BL2XU2QDb9D4om69GX3V--ji_wUILITVfs",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/users/membership",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"membership"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "91"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"5b-BecDv/hn5bKbpGFFglWgAlx17Yo\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Jun 2021 09:15:28 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Nama User\": \"ansells\",\n    \"Status\": \"Sukses unsubscribe member\",\n    \"Date unsubscribe\": \"29-6-2021\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Tagihan bulan ini",
@@ -714,7 +995,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMTUwMTgxM30.IV170BhCe8jEE5AVchAGBobfXOWIY_S2rOeRYWebNf0",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmVuZWRpZSIsInBhc3N3b3JkIjoiMTIzIiwiaWF0IjoxNjI0OTU4MDkxfQ.2zgc3TSZ1BL2XU2QDb9D4om69GX3V--ji_wUILITVfs",
 								"type": "text"
 							}
 						],
@@ -946,7 +1227,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMjgwMTQyOH0.e0RcnjQ1LuSzo_3UUS4AZCQDG8S2OUKr5qVRLqA9Q1k",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmVuZWRpZSIsInBhc3N3b3JkIjoiMTIzIiwiaWF0IjoxNjI0OTU4MDkxfQ.2zgc3TSZ1BL2XU2QDb9D4om69GX3V--ji_wUILITVfs",
 								"type": "text"
 							}
 						],
@@ -968,7 +1249,72 @@
 						},
 						"description": "Berguna untuk memperpanjang masa membership akun user selama 1 bulan\n\nDibutuhkan \n- x-auth-token\n- Tagihan telah lunas"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Extend Membeship",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmVuZWRpZSIsInBhc3N3b3JkIjoiMTIzIiwiaWF0IjoxNjI0OTU4MDkxfQ.2zgc3TSZ1BL2XU2QDb9D4om69GX3V--ji_wUILITVfs",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{base_url}}/api/users/membership/extend",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"membership",
+										"extend"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "96"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"60-6eQmiSoSM8HonEx2abiEj8phSdI\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Jun 2021 09:17:48 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Nama User\": \"ansells\",\n    \"End date\": \"29-7-2021\",\n    \"Status\": \"Berhasil Extend End date subscription!\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Lihat History Pembayaran Tagihan",
@@ -1113,7 +1459,7 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmUiLCJwYXNzd29yZCI6IjEyMyIsImlhdCI6MTYyMjgwMTQyOH0.e0RcnjQ1LuSzo_3UUS4AZCQDG8S2OUKr5qVRLqA9Q1k",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmVuZWRpZSIsInBhc3N3b3JkIjoiMTIzIiwiaWF0IjoxNjI0OTU4MDkxfQ.2zgc3TSZ1BL2XU2QDb9D4om69GX3V--ji_wUILITVfs",
 								"type": "text"
 							}
 						],
