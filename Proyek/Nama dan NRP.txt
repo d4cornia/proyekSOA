@@ -1,0 +1,21 @@
+Ansell Benedy - 218116711
+
+
+David Kristian Timotius - 218116716
+-Registrasi
+-Login
+-Subscribe to Membership
+-Unsubscribe membership
+-Lihat Saldo
+-Topup saldo
+-Cek tagihan 
+-Bayar tagihan
+-Extend membership
+-Cek history pembayaran tagihan
+-View pertandingan suatu tim
+-View History suatu tim
+
+
+
+
+Denny Susastro - 218116717
