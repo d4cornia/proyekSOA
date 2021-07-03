@@ -1,5 +1,7 @@
 Link Hosting
 -https://sportssoa.glitch.me
 
+base_url pada postman : https://sportssoa.glitch.me
+
 Link Dokumentasi
 -https://documenter.getpostman.com/view/14457507/Tzm2JJBN
