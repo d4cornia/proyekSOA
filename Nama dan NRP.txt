@@ -27,5 +27,11 @@ David Kristian Timotius - 218116716
 -Web hosting
 
 
-
 Denny Susastro - 218116717
+- View User
+- View Membership
+- Refresh Statium
+- Delete stadium
+- View list stadium
+- Edit stadium
+- Add stadium
