@@ -1,4 +1,14 @@
 Ansell Benedy - 218116711
+- Team Resources
+- Refresh Team
+- Add Team
+- Update Team
+- Delete Team
+- Search Detail Team
+- View All Teams Registered
+- View Manager Team
+- Add To Favorite Team
+- Remove to List Favorite Team
 
 
 David Kristian Timotius - 218116716
