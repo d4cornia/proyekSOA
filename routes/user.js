@@ -120,7 +120,7 @@ router.post('/register', upload.single("foto"), async (req,res)=> {
             // 1 = biasa
             // 2 = subscriber
             let api_key = genKodeAPI(20);
-            await db.query(`INSERT INTO users VALUES('','${req.body.no_telepon}','${req.body.username}','${req.body.nama}','${req.body.email}', '1','${req.body.password}', 0,'${dir}', '${api_key}')`);
+            await db.query(`INSERT INTO users VALUES(null,'${req.body.no_telepon}','${req.body.username}','${req.body.nama}','${req.body.email}', '1','${req.body.password}', 0,'${dir}', '${api_key}')`);
 
             return res.status(201).json({
                 'No Telepon': req.body.no_telepon,
@@ -249,7 +249,7 @@ router.post('/membership', cekJWT, async (req,res)=>{
         }
 
         // kalo belum terdaftar, insert
-        await db.query(`INSERT INTO members VALUES('', '${req.user.id_user}', '-', '${newenddate}', '${since}', '-')`);
+        await db.query(`INSERT INTO members VALUES(null, '${req.user.id_user}', '-', '${newenddate}', '${since}', '-')`);
         // Update tipe member
         await db.query(`UPDATE users SET type = 2 WHERE id_user='${req.user.id_user}'`);
 
@@ -291,7 +291,7 @@ router.post('/membership', cekJWT, async (req,res)=>{
     await db.query(`UPDATE users SET wallet = ${sisa}, type = 2 WHERE id_user='${req.user.id_user}'`);
     // insert ke history payment
     resu = await db.query(`SELECT * FROM members WHERE id_user = '${req.user.id_user}'`);
-    await db.query(`INSERT INTO payments VALUES('', '${resu[0].id_member}', '${since}', ${cost}, 'Bayar Subcribe member menjadi Membership Kembali')`);
+    await db.query(`INSERT INTO payments VALUES(null, '${resu[0].id_member}', '${since}', ${cost}, 'Bayar Subcribe member menjadi Membership Kembali')`);
 
     return res.status(200).json({
         'Nama User': req.user.nama,
@@ -415,7 +415,7 @@ router.post('/membership/bayar', [cekJWT, authSubscriber], async (req, res)=> {
 
     // insert ke history payment
     resu = await db.query(`SELECT * FROM members WHERE id_user = '${req.user.id_user}'`);
-    await db.query(`INSERT INTO payments VALUES('', '${resu[0].id_member}', '${now}', ${cost}, 'Bayar Tagihan Bulanan')`);
+    await db.query(`INSERT INTO payments VALUES(null, '${resu[0].id_member}', '${now}', ${cost}, 'Bayar Tagihan Bulanan')`);
 
     return res.status(200).json({
         'Nama User': req.user.nama,
@@ -614,7 +614,7 @@ router.post("/favorite/add", [cekJWT, authSubscriber], async(req, res) => {
         console.log(user.username);
         if(fav.length==0){
 
-            await db.query(`INSERT INTO favorite VALUES("","${user.username}","${id_team}",1)`);
+            await db.query(`INSERT INTO favorite VALUES(null,"${user.username}","${id_team}",1)`);
             res.status(201).send({
                 status : "Success Add "+result[0].nama+" as Favorite Teams"
             });
