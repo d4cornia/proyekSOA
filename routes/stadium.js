@@ -65,7 +65,7 @@ router.get('/list',async function (req,res) {
     if(req.query.name){
         result = await db.query(`SELECT * FROM stadium where nama like'%${req.query.name}%'`);
         if(result.length<=0){
-            return res.status(400).json({'error':"Stadium Tidak Ditemukan"});
+            return res.status(404).json({'error':"Stadium Tidak Ditemukan"});
         }
     }
     else{
